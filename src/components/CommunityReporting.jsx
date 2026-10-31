@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Send, CheckCircle2, MessageSquare, AlertCircle, Camera, ExternalLink, ListFilter } from 'lucide-react';
+import React, { useState } from 'react';
+import { Send, CheckCircle2, MessageSquare, AlertCircle, ExternalLink, ListFilter, RotateCcw } from 'lucide-react';
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
-export default function CommunityReporting({ isOpenModal, onCloseModal }) {
+export default function CommunityReporting({
+  isOpenModal = false,
+  onCloseModal,
+  reportsList = [],
+  onAddReport,
+  onResetReports
+}) {
   const [activeFormMode, setActiveFormMode] = useState('direct');
-  const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [filterBarangay, setFilterBarangay] = useState('All');
+  const [validationError, setValidationError] = useState('');
 
   // Confirmation & Receipt Dialog States
   const [pendingReport, setPendingReport] = useState(null);
   const [receiptData, setReceiptData] = useState(null);
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
   // Form Fields
   const [barangay, setBarangay] = useState('Pugad');
@@ -18,79 +25,61 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
   const [description, setDescription] = useState('');
   const [reporterType, setReporterType] = useState('Resident');
 
-  // Stored Reports in LocalStorage
-  const [reportsList, setReportsList] = useState([
-    {
-      id: 1,
-      barangay: "Tibaguin",
-      issueType: "Sunny-Day Tidal Flooding",
-      waterDepth: "12 - 18 inches",
-      description: "Spring tide entered school premises at 11:30 AM. Classes shifted to makeshift stilt catwalks.",
-      reporterType: "Teacher / Resident",
-      date: "2026-10-28"
-    },
-    {
-      id: 2,
-      barangay: "San Pascual",
-      issueType: "Structural Foundation Cracking",
-      waterDepth: "None",
-      description: "Concrete fence tilted by ~15 degrees due to differential settlement near old aquaculture well.",
-      reporterType: "Homeowner",
-      date: "2026-10-25"
-    },
-    {
-      id: 3,
-      barangay: "Mercado",
-      issueType: "Drainage Backflow",
-      waterDepth: "4 - 8 inches",
-      description: "High tide backflow through drainage culvert near public market during full moon tide.",
-      reporterType: "Merchant",
-      date: "2026-10-22"
-    }
-  ]);
-
-  // Load from localStorage on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('hagonoy_groundwatch_reports');
-      if (saved) {
-        setReportsList(JSON.parse(saved));
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
-
   const handleInitiateSubmit = (e) => {
     e.preventDefault();
-    if (!description.trim()) return;
+    if (!description.trim()) {
+      setValidationError('Please enter a description of the observed sinking or flood incident.');
+      return;
+    }
+    setValidationError('');
 
-    setPendingReport({
+    const newPending = {
       id: Date.now(),
       refCode: `HGW-${Math.floor(1000 + Math.random() * 9000)}`,
       barangay,
       issueType,
       waterDepth,
-      description,
+      description: description.trim(),
       reporterType,
       date: new Date().toISOString().split('T')[0]
-    });
+    };
+
+    setPendingReport(newPending);
   };
 
   const handleConfirmSubmit = () => {
     if (!pendingReport) return;
-    const updated = [pendingReport, ...reportsList];
-    setReportsList(updated);
-    try {
-      localStorage.setItem('hagonoy_groundwatch_reports', JSON.stringify(updated));
-    } catch (err) {
-      console.error(err);
+    if (onAddReport) {
+      onAddReport(pendingReport);
     }
     setReceiptData(pendingReport);
     setPendingReport(null);
     setDescription('');
+    setValidationError('');
   };
 
+  const handleCloseReceipt = () => {
+    setReceiptData(null);
+    if (onCloseModal) {
+      onCloseModal();
+    }
+    // Scroll to the community reporting section to show the new record in the live register
+    setTimeout(() => {
+      const section = document.getElementById('community-report');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 150);
+  };
+
+  const handleExecuteReset = () => {
+    if (onResetReports) {
+      onResetReports();
+    }
+    setIsResetConfirmOpen(false);
+  };
+
+  // Shared Form Content
   const formContent = (
     <div>
       {/* Form Mode Toggle */}
@@ -121,10 +110,10 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
 
       {activeFormMode === 'direct' ? (
         <form onSubmit={handleInitiateSubmit} className="space-y-4">
-          {submittedSuccess && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-xs flex items-center gap-2 animate-fade-in">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Observation recorded successfully and added to the community telemetry log.</span>
+          {validationError && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-800 rounded text-xs flex items-center gap-2 animate-fade-in">
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+              <span>{validationError}</span>
             </div>
           )}
 
@@ -207,7 +196,10 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               required
               rows={3}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                if (validationError) setValidationError('');
+              }}
               placeholder="Describe street name, time of high tide inundation, foundation cracks observed, or house floor lifting..."
               className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
             />
@@ -277,34 +269,168 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
     </div>
   );
 
-  // If used as modal
-  if (isOpenModal) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
-        <div className="bg-white border border-slate-200 rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-xl animate-scale-in">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
-            <div>
-              <h3 className="font-bold text-slate-900 text-base">
-                Community Sinking & Tidal Inundation Report
-              </h3>
-              <p className="text-xs text-slate-500">
-                Submit localized observations in Hagonoy, Bulacan.
-              </p>
-            </div>
-            <button
-              onClick={onCloseModal}
-              className="text-slate-400 hover:text-slate-700 active:scale-90 transition-transform text-lg font-bold p-1 rounded"
-            >
-              ✕
-            </button>
+  // Reusable Dialogs
+  const confirmationDialog = pendingReport && (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-2xl animate-scale-in">
+        <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2 text-cyan-800 font-bold text-base">
+            <AlertCircle className="w-5 h-5 text-cyan-700" />
+            <span>Confirm Observation Submission</span>
           </div>
-          {formContent}
+          <button
+            type="button"
+            onClick={() => setPendingReport(null)}
+            className="text-slate-400 hover:text-slate-600 font-bold text-sm p-1 rounded"
+          >
+            ✕
+          </button>
+        </div>
+
+        <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+          Please verify your field report details before committing. Once logged, this observation will be indexed into the public telemetry registry for Hagonoy.
+        </p>
+
+        <div className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-2 mb-5 font-mono">
+          <div className="flex justify-between">
+            <span className="text-slate-500">Sector:</span>
+            <span className="font-bold text-slate-900">Brgy. {pendingReport.barangay}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Category:</span>
+            <span className="font-bold text-cyan-800">{pendingReport.issueType}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Water Depth:</span>
+            <span className="font-bold text-slate-900">{pendingReport.waterDepth}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-slate-500">Reporter:</span>
+            <span className="font-semibold text-slate-700">{pendingReport.reporterType}</span>
+          </div>
+          <div className="pt-2 border-t border-slate-200 text-slate-700 font-sans text-xs">
+            "{pendingReport.description}"
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-2.5 pt-2">
+          <button
+            type="button"
+            onClick={() => setPendingReport(null)}
+            className="px-4 py-2 text-xs font-semibold rounded border border-slate-300 text-slate-700 hover:bg-slate-50 transition active:scale-95"
+          >
+            Back to Edit
+          </button>
+          <button
+            type="button"
+            onClick={handleConfirmSubmit}
+            className="px-4 py-2 text-xs font-bold rounded bg-cyan-700 text-white hover:bg-cyan-800 transition shadow-xs active:scale-95"
+          >
+            Confirm & Log Report
+          </button>
         </div>
       </div>
+    </div>
+  );
+
+  const receiptDialog = receiptData && (
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-2xl animate-scale-in text-center">
+        <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+          <CheckCircle2 className="w-6 h-6" />
+        </div>
+        <h3 className="font-bold text-slate-900 text-base mb-1">
+          Field Telemetry Successfully Logged
+        </h3>
+        <p className="text-xs text-slate-600 mb-4">
+          Your observation for <strong>Brgy. {receiptData.barangay}</strong> is now recorded in the civic register.
+        </p>
+
+        <div className="p-3.5 bg-slate-50 border border-slate-200 rounded font-mono text-xs mb-5 space-y-1">
+          <div className="text-slate-500 text-[10px] uppercase">Telemetry Reference ID</div>
+          <div className="text-xl font-extrabold text-cyan-900 tracking-wider">{receiptData.refCode}</div>
+          <div className="text-[10px] text-slate-400">Timestamp: {receiptData.date} | Status: PUBLIC_OPEN_ACCESS</div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleCloseReceipt}
+          className="w-full py-2.5 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98 shadow-sm"
+        >
+          Close & View in Live Register
+        </button>
+      </div>
+    </div>
+  );
+
+  const resetConfirmDialog = isResetConfirmOpen && (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-lg max-w-sm w-full p-6 shadow-2xl animate-scale-in">
+        <div className="flex items-center gap-2 text-amber-800 font-bold text-base mb-2">
+          <RotateCcw className="w-5 h-5 text-amber-600" />
+          <span>Reset Telemetry Records?</span>
+        </div>
+        <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+          This will restore the community telemetry feed to the default baseline records. Any locally submitted observations will be cleared.
+        </p>
+        <div className="flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => setIsResetConfirmOpen(false)}
+            className="px-3 py-1.5 text-xs font-semibold rounded border border-slate-300 text-slate-700 hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleExecuteReset}
+            className="px-3.5 py-1.5 text-xs font-bold rounded bg-red-600 text-white hover:bg-red-700"
+          >
+            Confirm Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // If component is mounted as a Modal
+  if (isOpenModal) {
+    return (
+      <>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-xl animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+              <div>
+                <h3 className="font-bold text-slate-900 text-base">
+                  Community Sinking & Tidal Inundation Report
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Submit localized observations in Hagonoy, Bulacan.
+                </p>
+              </div>
+              <button
+                onClick={onCloseModal}
+                className="text-slate-400 hover:text-slate-700 active:scale-90 transition-transform text-lg font-bold p-1 rounded"
+              >
+                ✕
+              </button>
+            </div>
+            {formContent}
+          </div>
+        </div>
+
+        {/* Modal dialog overlays */}
+        {confirmationDialog}
+        {receiptDialog}
+      </>
     );
   }
 
   // Regular In-page Section
+  const displayedReports = filterBarangay === 'All'
+    ? reportsList
+    : reportsList.filter((r) => r.barangay === filterBarangay);
+
   return (
     <section id="community-report" className="py-16 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -336,6 +462,14 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
                 </h3>
               </div>
               <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsResetConfirmOpen(true)}
+                  className="text-[11px] font-mono text-slate-500 hover:text-slate-800 p-1 rounded hover:bg-slate-100 transition"
+                  title="Reset to default baseline records"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
                 <select
                   value={filterBarangay}
                   onChange={(e) => setFilterBarangay(e.target.value)}
@@ -355,125 +489,59 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
             </div>
 
             <div className="space-y-3.5 max-h-[460px] overflow-y-auto pr-1">
-              {(filterBarangay === 'All' ? reportsList : reportsList.filter(r => r.barangay === filterBarangay)).map((rep) => (
-                <div
-                  key={rep.id}
-                  className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1.5 interactive-card"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900">
-                      Brgy. {rep.barangay}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-400">
-                      {rep.date}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-cyan-100 text-cyan-900">
-                      {rep.issueType}
-                    </span>
-                    {rep.waterDepth !== 'None' && rep.waterDepth !== 'None / Structural Only' && (
-                      <span className="text-[10px] font-mono text-red-700 font-semibold">
-                        Depth: {rep.waterDepth}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-slate-600 leading-relaxed text-[11px] pt-1">
-                    "{rep.description}"
-                  </p>
-                  <div className="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60 font-mono">
-                    Logged by: {rep.reporterType}
-                  </div>
+              {displayedReports.length === 0 ? (
+                <div className="p-6 text-center text-xs text-slate-500 bg-slate-50 rounded border border-slate-100">
+                  No incident logs found for Brgy. {filterBarangay}.
                 </div>
-              ))}
+              ) : (
+                displayedReports.map((rep) => (
+                  <div
+                    key={rep.id}
+                    className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1.5 interactive-card"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-slate-900">
+                        Brgy. {rep.barangay}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {rep.refCode && (
+                          <span className="text-[10px] font-mono text-cyan-800 bg-cyan-100/60 px-1 rounded">
+                            {rep.refCode}
+                          </span>
+                        )}
+                        <span className="text-[10px] font-mono text-slate-400">
+                          {rep.date}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-cyan-100 text-cyan-900">
+                        {rep.issueType}
+                      </span>
+                      {rep.waterDepth && rep.waterDepth !== 'None' && rep.waterDepth !== 'None / Structural Only' && (
+                        <span className="text-[10px] font-mono text-red-700 font-semibold">
+                          Depth: {rep.waterDepth}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-slate-600 leading-relaxed text-[11px] pt-1">
+                      "{rep.description}"
+                    </p>
+                    <div className="text-[10px] text-slate-400 pt-1 border-t border-slate-200/60 font-mono">
+                      Logged by: {rep.reporterType}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Confirmation Dialog */}
-      {pendingReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-xl animate-scale-in">
-            <div className="flex items-center gap-2 text-cyan-800 font-bold text-base mb-2">
-              <AlertCircle className="w-5 h-5 text-cyan-700" />
-              <span>Confirm Observation Submission</span>
-            </div>
-            <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-              Please verify your report details. Once confirmed, this field observation will be indexed into the open-access telemetry log for Hagonoy.
-            </p>
-
-            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-2 mb-5 font-mono">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Sector:</span>
-                <span className="font-bold text-slate-900">Brgy. {pendingReport.barangay}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Category:</span>
-                <span className="font-bold text-cyan-800">{pendingReport.issueType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Water Depth:</span>
-                <span className="font-bold text-slate-900">{pendingReport.waterDepth}</span>
-              </div>
-              <div className="pt-2 border-t border-slate-200 text-slate-700 font-sans text-xs">
-                "{pendingReport.description}"
-              </div>
-            </div>
-
-            <div className="flex items-center justify-end gap-2.5 pt-2">
-              <button
-                type="button"
-                onClick={() => setPendingReport(null)}
-                className="px-4 py-2 text-xs font-semibold rounded border border-slate-300 text-slate-700 hover:bg-slate-50 transition active:scale-95"
-              >
-                Back to Edit
-              </button>
-              <button
-                type="button"
-                onClick={handleConfirmSubmit}
-                className="px-4 py-2 text-xs font-bold rounded bg-cyan-700 text-white hover:bg-cyan-800 transition shadow-xs active:scale-95"
-              >
-                Confirm & Log Report
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Success Receipt / Reference Dialog */}
-      {receiptData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-xl animate-scale-in text-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
-              <CheckCircle2 className="w-6 h-6" />
-            </div>
-            <h3 className="font-bold text-slate-900 text-base mb-1">
-              Field Telemetry Successfully Logged
-            </h3>
-            <p className="text-xs text-slate-600 mb-4">
-              Your observation for <strong>Brgy. {receiptData.barangay}</strong> is now live in the community register.
-            </p>
-
-            <div className="p-3 bg-slate-50 border border-slate-200 rounded font-mono text-xs mb-5 space-y-1">
-              <div className="text-slate-500 text-[10px] uppercase">Telemetry Tracking ID</div>
-              <div className="text-lg font-extrabold text-cyan-900">{receiptData.refCode}</div>
-              <div className="text-[10px] text-slate-400">Timestamp: {receiptData.date} | Status: PUBLIC_OPEN_ACCESS</div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setReceiptData(null);
-                if (onCloseModal) onCloseModal();
-              }}
-              className="w-full py-2.5 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98"
-            >
-              Close & View in Live Register
-            </button>
-          </div>
-        </div>
-      )}
+      {/* In-page dialog overlays */}
+      {confirmationDialog}
+      {receiptDialog}
+      {resetConfirmDialog}
     </section>
   );
 }
