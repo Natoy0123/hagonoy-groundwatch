@@ -22,14 +22,21 @@ def set_cell_background(cell, hex_color):
     shd = parse_xml(f'<w:shd {nsdecls("w")} w:fill="{hex_color}"/>')
     tcPr.append(shd)
 
-def set_table_borders(table):
+def set_academic_table_borders(table):
+    """
+    Standard APA/Academic booktabs border styling (matching DelAyre case study):
+    - Solid black top border (1.5pt)
+    - Solid black bottom border (1.5pt)
+    - Thin black horizontal interior dividers (0.5pt)
+    - No vertical borders
+    """
     tblPr = table._element.xpath('w:tblPr')
     if tblPr:
         borders = parse_xml(
             f'<w:tblBorders {nsdecls("w")}>'
-            f'  <w:top w:val="single" w:sz="12" w:space="0" w:color="1E293B"/>'
-            f'  <w:bottom w:val="single" w:sz="12" w:space="0" w:color="1E293B"/>'
-            f'  <w:insideH w:val="single" w:sz="4" w:space="0" w:color="CBD5E1"/>'
+            f'  <w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
+            f'  <w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
+            f'  <w:insideH w:val="single" w:sz="4" w:space="0" w:color="000000"/>'
             f'  <w:insideV w:val="none"/>'
             f'  <w:left w:val="none"/>'
             f'  <w:right w:val="none"/>'
@@ -47,12 +54,12 @@ def build_student_documentation():
         section.left_margin = Inches(1.0)
         section.right_margin = Inches(1.0)
 
-    # Base Normal Style: Calibri, 11pt, 1.15 line spacing, 6pt after
+    # Base Normal Style: Calibri, 11pt, 1.15 line spacing, 6pt after, pure black text
     style = doc.styles['Normal']
     font = style.font
     font.name = 'Calibri'
     font.size = Pt(11)
-    font.color.rgb = RGBColor(0x1E, 0x29, 0x3B)
+    font.color.rgb = RGBColor(0x00, 0x00, 0x00)
     style.paragraph_format.line_spacing = 1.15
     style.paragraph_format.space_after = Pt(6)
 
@@ -61,31 +68,31 @@ def build_student_documentation():
     # ==========================================
     title_p = doc.add_paragraph()
     title_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    title_p.paragraph_format.space_before = Pt(72)
+    title_p.paragraph_format.space_before = Pt(80)
     title_p.paragraph_format.space_after = Pt(12)
 
     r_top = title_p.add_run("PROJECT DOCUMENTATION\n")
     r_top.font.name = 'Calibri'
     r_top.font.size = Pt(13)
     r_top.font.bold = True
-    r_top.font.color.rgb = RGBColor(0x47, 0x55, 0x69)
+    r_top.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     r_main_title = title_p.add_run("Hagonoy GroundWatch:\nA Web-Based Environmental Awareness Platform on Land Subsidence")
     r_main_title.font.name = 'Calibri'
-    r_main_title.font.size = Pt(18)
+    r_main_title.font.size = Pt(17)
     r_main_title.font.bold = True
-    r_main_title.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+    r_main_title.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     sub_p = doc.add_paragraph()
     sub_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     sub_p.paragraph_format.space_before = Pt(8)
-    sub_p.paragraph_format.space_after = Pt(140)
+    sub_p.paragraph_format.space_after = Pt(160)
 
     r_sub = sub_p.add_run("Final Course Output in Environmental Science\nAcademic Year 2026–2027 | First Semester")
     r_sub.font.name = 'Calibri'
     r_sub.font.size = Pt(11.5)
     r_sub.font.italic = True
-    r_sub.font.color.rgb = RGBColor(0x64, 0x74, 0x8B)
+    r_sub.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     # Bottom Metadata Block
     meta_p = doc.add_paragraph()
@@ -95,9 +102,11 @@ def build_student_documentation():
     r_by_label = meta_p.add_run("Submitted by:\n")
     r_by_label.font.bold = True
     r_by_label.font.size = Pt(11)
+    r_by_label.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     r_members = meta_p.add_run("Del Ayre, Patrick Froilan S.\nManinang, Mark Joseph C.\nDavid, Angelo P.\n")
     r_members.font.size = Pt(11)
+    r_members.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     sec_p = doc.add_paragraph()
     sec_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -106,37 +115,41 @@ def build_student_documentation():
     r_sec_label = sec_p.add_run("Course & Section:\n")
     r_sec_label.font.bold = True
     r_sec_label.font.size = Pt(11)
+    r_sec_label.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     r_sec = sec_p.add_run("Environmental Science / BSIT 4A-G1\n")
     r_sec.font.size = Pt(11)
+    r_sec.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     date_p = doc.add_paragraph()
     date_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    date_p.paragraph_format.space_after = Pt(18)
+    date_p.paragraph_format.space_after = Pt(16)
 
     r_date_label = date_p.add_run("Date of Submission:\n")
     r_date_label.font.bold = True
     r_date_label.font.size = Pt(11)
+    r_date_label.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     r_date = date_p.add_run("October 31, 2026\n")
     r_date.font.size = Pt(11)
+    r_date.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     links_p = doc.add_paragraph()
     links_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    links_p.paragraph_format.space_before = Pt(12)
+    links_p.paragraph_format.space_before = Pt(8)
     
     r_links = links_p.add_run(
         "Live Deployment: https://hagonoy-groundwatch-tik7.onrender.com\n"
         "GitHub Repository: https://github.com/Natoy0123/hagonoy-groundwatch"
     )
-    r_links.font.name = 'Consolas'
-    r_links.font.size = Pt(9.5)
-    r_links.font.color.rgb = RGBColor(0x0E, 0x74, 0x90)
+    r_links.font.name = 'Calibri'
+    r_links.font.size = Pt(10)
+    r_links.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     doc.add_page_break()
 
     # ==========================================
-    # HEADINGS HELPERS
+    # HEADINGS HELPERS (ALL PURE BLACK TEXT)
     # ==========================================
     def add_h1(text):
         p = doc.add_paragraph()
@@ -145,9 +158,9 @@ def build_student_documentation():
         p.paragraph_format.keep_with_next = True
         run = p.add_run(text)
         run.font.name = 'Calibri'
-        run.font.size = Pt(13.5)
+        run.font.size = Pt(13)
         run.font.bold = True
-        run.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
         return p
 
     def add_h2(text):
@@ -157,9 +170,9 @@ def build_student_documentation():
         p.paragraph_format.keep_with_next = True
         run = p.add_run(text)
         run.font.name = 'Calibri'
-        run.font.size = Pt(12)
+        run.font.size = Pt(11.5)
         run.font.bold = True
-        run.font.color.rgb = RGBColor(0x0E, 0x74, 0x90)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
         return p
 
     def add_callout(text, bold_prefix="Key Takeaway: "):
@@ -170,9 +183,10 @@ def build_student_documentation():
         p.paragraph_format.space_after = Pt(8)
         run_p = p.add_run(bold_prefix)
         run_p.font.bold = True
-        run_p.font.color.rgb = RGBColor(0x0E, 0x74, 0x90)
+        run_p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
         run_t = p.add_run(text)
         run_t.font.italic = True
+        run_t.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
         return p
 
     # ==========================================
@@ -234,9 +248,10 @@ def build_student_documentation():
     r_t1 = p_t1_title.add_run("Table 1. Localized Subsidence Rates and Vulnerability Profile Across Hagonoy Sectors")
     r_t1.font.bold = True
     r_t1.font.size = Pt(10.5)
+    r_t1.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     table1 = doc.add_table(rows=6, cols=5)
-    set_table_borders(table1)
+    set_academic_table_borders(table1)
     table1.alignment = WD_TABLE_ALIGNMENT.CENTER
 
     headers1 = [
@@ -251,14 +266,14 @@ def build_student_documentation():
     for c_idx, h_text in enumerate(headers1):
         cell = table1.cell(0, c_idx)
         cell.width = col_widths1[c_idx]
-        set_cell_background(cell, "F1F5F9")
+        set_cell_background(cell, "F8F9FA")
         set_cell_margins(cell, top=120, bottom=120, left=140, right=140)
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         run = p.add_run(h_text)
         run.font.bold = True
         run.font.size = Pt(9.5)
-        run.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     data1 = [
         ("Pugad (Island Sector)", "Delta-mouth silt & soft clay", "4.8 – 5.2 cm/yr", "210+ days/yr", "Completely isolated during spring tides; residences raised on wooden stilts."),
@@ -276,11 +291,11 @@ def build_student_documentation():
             p = cell.paragraphs[0]
             run = p.add_run(val)
             run.font.size = Pt(9)
+            run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
             if c_idx in (2, 3):
-                run.font.name = 'Consolas'
+                run.font.name = 'Calibri'
                 if "5.2" in val or "4.9" in val or "210" in val:
                     run.font.bold = True
-                    run.font.color.rgb = RGBColor(0xDC, 0x26, 0x26)
 
     add_callout(
         "Because the land in Hagonoy is sinking at up to 50 mm/yr while ocean levels rise at ~3.4 mm/yr, "
@@ -312,7 +327,9 @@ def build_student_documentation():
         p.paragraph_format.space_after = Pt(4)
         r_p = p.add_run(pref)
         r_p.font.bold = True
-        p.add_run(body)
+        r_p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+        r_b = p.add_run(body)
+        r_b.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     doc.add_paragraph(
         "Target Beneficiaries: The platform is designed for Hagonoy residents coping with daily tidal disruptions, "
@@ -340,9 +357,10 @@ def build_student_documentation():
     r_t2 = p_t2_title.add_run("Table 2. Functional Architecture and Educational Capabilities of GroundWatch")
     r_t2.font.bold = True
     r_t2.font.size = Pt(10.5)
+    r_t2.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     table2 = doc.add_table(rows=6, cols=3)
-    set_table_borders(table2)
+    set_academic_table_borders(table2)
     table2.alignment = WD_TABLE_ALIGNMENT.CENTER
 
     headers2 = ["Module Name", "Technical & Data Implementation", "Educational & Civic Function"]
@@ -351,14 +369,14 @@ def build_student_documentation():
     for c_idx, h_text in enumerate(headers2):
         cell = table2.cell(0, c_idx)
         cell.width = col_widths2[c_idx]
-        set_cell_background(cell, "F1F5F9")
+        set_cell_background(cell, "F8F9FA")
         set_cell_margins(cell, top=120, bottom=120, left=140, right=140)
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         run = p.add_run(h_text)
         run.font.bold = True
         run.font.size = Pt(9.5)
-        run.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     data2 = [
         ("Interactive GIS Hazard Map", "Leaflet.js engine with custom GeoJSON polygons, sector search filters, risk-coded markers, and detailed geoscientific popups.", "Visualizes localized ground sinking rates across 8 key sectors; allows users to fly to their own barangay and view geological hazards."),
@@ -376,6 +394,7 @@ def build_student_documentation():
             p = cell.paragraphs[0]
             run = p.add_run(val)
             run.font.size = Pt(9)
+            run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
             if c_idx == 0:
                 run.font.bold = True
 
@@ -394,9 +413,10 @@ def build_student_documentation():
     r_t3 = p_t3_title.add_run("Table 3. Technology Stack and Implementation Rationale")
     r_t3.font.bold = True
     r_t3.font.size = Pt(10.5)
+    r_t3.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     table3 = doc.add_table(rows=7, cols=3)
-    set_table_borders(table3)
+    set_academic_table_borders(table3)
     table3.alignment = WD_TABLE_ALIGNMENT.CENTER
 
     headers3 = ["Technology Component", "Tool / Library Selected", "Student Engineering Rationale"]
@@ -405,18 +425,18 @@ def build_student_documentation():
     for c_idx, h_text in enumerate(headers3):
         cell = table3.cell(0, c_idx)
         cell.width = col_widths3[c_idx]
-        set_cell_background(cell, "F1F5F9")
+        set_cell_background(cell, "F8F9FA")
         set_cell_margins(cell, top=120, bottom=120, left=140, right=140)
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         run = p.add_run(h_text)
         run.font.bold = True
         run.font.size = Pt(9.5)
-        run.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     data3 = [
         ("Frontend Framework", "React 19 + Vite 8", "Provides lightning-fast build times, modular component reusability, and tiny bundle sizes (<150 kB gzip)."),
-        ("Responsive Layout & Styling", "Tailwind CSS v4", "Enables clean, utility-first responsive styling; customized with an instrument-grade palette (Slate-900, Cyan-700, Amber-600)."),
+        ("Responsive Layout & Styling", "Tailwind CSS v4", "Enables clean, utility-first responsive styling; customized with an instrument-grade palette (Slate-900, Slate-700)."),
         ("Geospatial Mapping", "Leaflet.js 1.9.4 + OpenStreetMap", "100% open-source mapping engine without API key limits or billing overhead; lightweight on mobile hardware."),
         ("Vector Graphics", "Lucide React", "Clean SVG iconography that scales crisply on retina displays without bloating page weight."),
         ("Data Persistence", "HTML5 LocalStorage API", "Allows field reports to persist on the user's device without requiring backend database servers or account registration."),
@@ -431,10 +451,9 @@ def build_student_documentation():
             p = cell.paragraphs[0]
             run = p.add_run(val)
             run.font.size = Pt(9)
+            run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
             if c_idx == 0:
                 run.font.bold = True
-            elif c_idx == 1:
-                run.font.name = 'Consolas'
 
     # ==========================================
     # SECTION IV: ENVIRONMENTAL SIGNIFICANCE
@@ -468,7 +487,9 @@ def build_student_documentation():
         p.paragraph_format.space_after = Pt(4)
         r_p = p.add_run(pref)
         r_p.font.bold = True
-        p.add_run(body)
+        r_p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+        r_b = p.add_run(body)
+        r_b.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     # ==========================================
     # SECTION V: CONCLUSION & RECOMMENDATIONS
@@ -498,9 +519,10 @@ def build_student_documentation():
     r_t4 = p_t4_title.add_run("Table 4. Recommended Policy and Engineering Interventions for Hagonoy")
     r_t4.font.bold = True
     r_t4.font.size = Pt(10.5)
+    r_t4.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     table4 = doc.add_table(rows=5, cols=4)
-    set_table_borders(table4)
+    set_academic_table_borders(table4)
     table4.alignment = WD_TABLE_ALIGNMENT.CENTER
 
     headers4 = ["Intervention Level", "Proposed Action Plan", "Lead Agency", "Projected Environmental Impact"]
@@ -509,14 +531,14 @@ def build_student_documentation():
     for c_idx, h_text in enumerate(headers4):
         cell = table4.cell(0, c_idx)
         cell.width = col_widths4[c_idx]
-        set_cell_background(cell, "F1F5F9")
+        set_cell_background(cell, "F8F9FA")
         set_cell_margins(cell, top=120, bottom=120, left=140, right=140)
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         run = p.add_run(h_text)
         run.font.bold = True
         run.font.size = Pt(9.5)
-        run.font.color.rgb = RGBColor(0x0F, 0x17, 0x2A)
+        run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     data4 = [
         ("Municipal (Immediate)", "Enact an immediate moratorium on drilling new commercial deep wells, especially for fishponds and ice plants. Install flow meters on existing high-capacity pumps.", "Hagonoy LGU & NWRB", "Stops rapid depressurization of deep aquifers within 6 to 12 months."),
@@ -533,6 +555,7 @@ def build_student_documentation():
             p = cell.paragraphs[0]
             run = p.add_run(val)
             run.font.size = Pt(9)
+            run.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
             if c_idx == 0:
                 run.font.bold = True
 
@@ -556,6 +579,7 @@ def build_student_documentation():
         p.paragraph_format.space_after = Pt(6)
         r = p.add_run(ref)
         r.font.size = Pt(10)
+        r.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
 
     # Save to project docs
     repo_docx_path = r"C:\Users\ADMIN\React_Projects\hagonoy-groundwatch\docs\Hagonoy-GroundWatch-Project-Documentation.docx"
