@@ -1,20 +1,20 @@
 # Hagonoy GroundWatch: A Web-Based Environmental Awareness Platform on Land Subsidence
 
 **Final Course Output in Environmental Science**  
-**Academic Year 2026–2027 | 1st Semester**
+**Academic Year 2026–2027 | First Semester**
 
 ---
 
 ## Cover & Course Information
 
-* **Project Title:** Hagonoy GroundWatch: A Web-Based Environmental Awareness Platform on Land Subsidence
-* **Course:** Environmental Science
-* **Section:** BSIT 4A-G1
-* **Group Members:**
+* **Document Title:** Project Documentation: Hagonoy GroundWatch
+* **Subtitle:** A Web-Based Environmental Awareness Platform on Land Subsidence in Hagonoy, Bulacan
+* **Course & Section:** Environmental Science / BSIT 4A-G1
+* **Submitted by (Group Members):**
   1. **Del Ayre, Patrick Froilan S.** (BSIT 4A-G1)
   2. **Maninang, Mark Joseph C.** (BSIT 4A-G1)
   3. **David, Angelo P.** (BSIT 4A-G1)
-* **Date of Submission:** October 31, 2026 (1st Semester, A.Y. 2026–2027)
+* **Date of Submission:** October 31, 2026
 * **Live Web Application (Render):** [https://hagonoy-groundwatch-tik7.onrender.com](https://hagonoy-groundwatch-tik7.onrender.com)
 * **GitHub Repository:** [https://github.com/Natoy0123/hagonoy-groundwatch](https://github.com/Natoy0123/hagonoy-groundwatch)
 
@@ -22,39 +22,55 @@
 
 ## Executive Summary
 
-Coastal communities across the western Pampanga River Delta face an escalating existential crisis: the land beneath their feet is sinking faster than anywhere else in the Philippine archipelago. In Hagonoy, Bulacan, anthropogenic groundwater over-extraction—primarily driven by commercial aquaculture fishponds, ice plants, and thousands of unmetered deep wells—collapses unconsolidated Quaternary clay layers, causing peak subsidence rates of 2.5 to 5.2 centimeters per year. Combined with global sea-level rise, this causes high tides to regularly submerge residential roads, homes, and municipal facilities under sunny skies.
+For generations, residents along the coastal plains of Hagonoy, Bulacan have lived with rising waters. High tides regularly submerge national roads, school grounds, and residential doorways even under clear skies—a condition locals call *"baha kahit walang ulan"*. While public opinion often attributes this perpetual flooding purely to climate change and global sea level rise, peer-reviewed geological data reveals a far more immediate and aggressive culprit: the ground beneath Hagonoy is physically sinking at rates between **2.5 and 5.2 centimeters per year**.
 
-To address the pervasive public misconception that chronic flooding is purely an unavoidable consequence of ocean warming, this project presents **Hagonoy GroundWatch** (https://hagonoy-groundwatch-tik7.onrender.com). GroundWatch is a civic telemetry and digital environmental advocacy platform that synthesizes satellite InSAR observations, local hazard data, and an interactive GIS interface. By translating complex hydrogeological dynamics into accessible community telemetry, an aquifer stress simulator, and a citizen incident ingestion portal, GroundWatch empowers residents, educators, and local decision-makers to champion sustainable water resource management and demand transition to treated surface bulk water.
+This dramatic subsidence is driven primarily by excessive groundwater extraction. Unregulated deep wells feeding commercial fishponds, ice plants, and municipal demands have systematically drained the subsurface aquifers, causing unconsolidated deltaic clay layers to collapse under their own overburden weight. Because global sea level rises at roughly 3.4 millimeters annually while Hagonoy sinks up to 50 millimeters annually, land subsidence accounts for over 90% of the relative sea-level rise experienced along this coast.
+
+As fourth-year Information Technology students, our team developed **Hagonoy GroundWatch** ([https://hagonoy-groundwatch-tik7.onrender.com](https://hagonoy-groundwatch-tik7.onrender.com)) as our Environmental Science course project. GroundWatch is an interactive web platform designed to bridge the gap between technical geological research and everyday community awareness. By integrating satellite InSAR velocity records, an interactive GIS map, a slider-based aquifer stress simulator, and a crowdsourced citizen observation log, the platform translates dense scientific findings into clear, practical telemetry. Our goal is to shift public perception from passive fatalism toward informed community action, demonstrating why permanent solutions like treated surface water networks and strict deep-well moratoria are urgently needed.
 
 ---
 
 ## I. Introduction
 
 ### 1.1 Overview of Land Subsidence
-Land subsidence refers to the differential or uniform downward settling of the Earth's surface relative to a baseline datum. While subsidence can result from tectonic movements, volcanic readjustments, or natural sediment loading, rapid coastal subsidence across Southeast Asian deltas is predominantly **anthropogenic**.
 
-When unconsolidated, water-saturated clay and silt layers are drained of their pore water through excessive deep-well pumping, the fluid pressure that formerly held sediment particles apart is permanently lost. The overburden weight of overlying soil and civil infrastructure compresses the clay matrix into a denser, permanently compacted structure. Once pore spaces collapse, the loss of storage capacity is irreversible—even subsequent heavy rains cannot restore the sunken land surface to its original elevation.
+Land subsidence is the gradual or sudden downward settling of the ground surface relative to surrounding sea level or geodetic baselines. In river deltas and coastal lowlands, subsidence occurs when the subterranean pore-water pressure that normally supports unconsolidated silt and clay sediments is depleted. Under natural conditions, underground water fills the microscopic spaces between clay platelets, exerting hydrostatic pressure that counteracts the heavy weight of the soil above.
+
+When humans extract groundwater through motorized deep wells faster than natural rainfall can recharge the aquifer, pore-water pressure drops sharply. Deprived of fluid support, the compressible clay and silt particles are forced into tighter, denser arrangements. This compaction is geomechanically irreversible: once the pore network collapses, the ground surface sinks permanently. Even when heavy monsoon rains bring seasonal flooding, the compacted clay strata cannot re-expand, permanently robbing the coastal aquifer of its storage capacity.
 
 ### 1.2 Environmental & Geographic Relevance to Hagonoy, Bulacan
-Hagonoy is situated on the low-lying alluvial plains of southwestern Bulacan, bordering Manila Bay to the south and the Pampanga River system to the west. Geologically, the municipality rests upon unconsolidated deltaic silt, fine sand, and highly compressible organic mud deposited over millennia.
 
-Over the past three decades, the rapid expansion of brackish water fishponds (producing milkfish/bangus and prawns), commercial ice plants, and intensive domestic water extraction has led to thousands of unmetered deep wells piercing the coastal confined aquifer. Satellite Interferometric Synthetic Aperture Radar (InSAR) analyses by researchers from the University of the Philippines National Institute of Geological Sciences (UP-NIGS) demonstrate that southern Bulacan is subsiding at rates ranging from **2.5 to over 5.0 cm/year** (Eco et al., 2020; Siringan & Rodolfo, 2003).
+Hagonoy is situated on the low-lying delta of the Pampanga River system where it empties into northern Manila Bay. The municipal terrain consists of soft, water-rich Quaternary alluvial silt, fine sand, and organic mud deposited over thousands of years. These soft deltaic soils are extraordinarily sensitive to changes in fluid pressure.
 
-Consequently, relative sea-level rise in Hagonoy is progressing at **over 10 to 15 times the global eustatic rate** (~3.4 mm/year). Coastal and riverine barangays—including Pugad, Tibaguin, San Pascual, and Mercado—now sit near or below the mean high-water spring (MHWS) tide level. Communities routinely experience "baha kahit walang ulan" (sunny-day tidal flooding), where astronomical high tides force saltwater backwards through river mouths and drainage canals, paralyzing commerce, degrading freshwater aquifers through salinization, and cracking civil structures.
+Over the past thirty years, Hagonoy's economy shifted heavily toward intensive aquaculture, specifically milkfish (*bangus*) and prawn farming. Commercial fishpond operators rely heavily on deep freshwater wells to blend with saline bay water, maintaining ideal salinity gradients for fish growth. Together with ice plants and unmetered residential pumping, thousands of deep wells continually withdraw water from confined aquifers between 100 and 300 meters below ground. Studies conducted by geologists from the University of the Philippines National Institute of Geological Sciences (UP-NIGS) confirm that coastal Bulacan and Pampanga represent the most rapid subsidence hotspot in the Philippines, descending at **2.5 to over 5.0 cm each year** (Eco et al., 2020; Siringan & Rodolfo, 2003).
+
+#### Table 1. Localized Subsidence Rates and Vulnerability Profile Across Hagonoy Sectors
+
+| Barangay / Sector | Geological Matrix | Subsidence Velocity | Tidal Flooding Days | Observed Field Reality |
+| :--- | :--- | :--- | :--- | :--- |
+| **Pugad (Island Sector)** | Delta-mouth silt & soft clay | `4.8 – 5.2 cm/yr` | **210+ days/yr** | Completely isolated during spring tides; residences raised on wooden stilts. |
+| **Tibaguin** | Unconsolidated fluvial alluvium | `4.2 – 4.9 cm/yr` | **185 days/yr** | Road centerlines submerged twice daily; schools operate on elevated catwalks. |
+| **San Pascual** | Soft compressible clay & sand | `3.5 – 4.3 cm/yr` | **160 days/yr** | Severe structural cracking in concrete fences; high concentration of aquaculture wells. |
+| **Mercado (Town Center)** | Interbedded estuarine alluvium | `3.1 – 3.8 cm/yr` | **140 days/yr** | Drainage culvert backflow floods market stalls during full moon high tides. |
+| **San Agustin / San Pedro** | Inland deltaic sandy clay | `2.5 – 3.2 cm/yr` | **110 days/yr** | Shallow drinking wells contaminated by saltwater intrusion (>1,200 mg/L chlorides). |
+
+> **Scientific Assessment:** Because the land in Hagonoy is sinking at up to 50 mm/yr while ocean levels rise at ~3.4 mm/yr, land subsidence is causing local water levels to rise **15 times faster** than climate-driven sea level rise alone.
 
 ---
 
 ## II. Project Objectives
 
-The primary goal of the Hagonoy GroundWatch project is to bridge the critical gap between academic hydrogeological research and public environmental literacy in Bulacan. Specific objectives include:
+As BSIT students studying Environmental Science, we wanted our final output to be more than just an academic report filed away on a shelf. We observed firsthand that community members and even local leaders often feel powerless, viewing daily high tides as an inevitable consequence of bad weather or global warming. Our team set out to build an accessible, responsive digital platform called **Hagonoy GroundWatch** that translates scientific data into practical civic awareness.
 
-1. **Environmental Education & Misconception Demolition:** Dispel the widespread fatalistic narrative that flooding in Hagonoy is solely an act of nature or climate change, clearly communicating that groundwater overdrafting is the primary driver of subsidence.
-2. **Interactive Geospatial Visualization:** Provide an open-access, browser-based GIS map that geolocates high-risk barangays, local subsidence velocities, and tidal inundation frequencies without technical paywalls.
-3. **Public Engagement via Interactive Simulation:** Provide a parameter-driven "Aquifer Stress Simulator" and a "Literacy Quiz" allowing students and citizens to directly experience how water withdrawal rates dictate the lifespan of coastal land.
-4. **Citizen Science & Ground-Truth Telemetry:** Establish a functional citizen incident reporting module enabling residents to log local high-tide depths, foundation fractures, and floor elevation projects to support local government hazard monitoring.
-5. **Advocacy for Root-Cause Policy Solutions:** Shift the public discourse from reactive adaptation (such as perpetual road raising) toward permanent preventative interventions (such as municipal deep-well moratoria and integration with the Bulacan Bulk Water Supply Project).
+Our project pursued five concrete objectives:
 
-**Intended Users:**
+1. **Dispel the Climate Fatalism Myth:** Clearly communicate the scientific evidence that groundwater overdrafting—not global sea level rise alone—is the primary driver of chronic flooding in Hagonoy, showing that human decisions can influence the outcome.
+2. **Democratize Geospatial Hazard Telemetry:** Provide a free, browser-based GIS map that allows any citizen, student, or local official to examine subsidence rates and flood risks barangay by barangay without technical paywalls or complex software.
+3. **Enable Hands-On Environmental Modeling:** Build an intuitive Aquifer Stress Simulator that lets users test "what-if" scenarios, showing how reducing groundwater pumping directly slows ground subsidence and preserves land elevation.
+4. **Facilitate Citizen Science Ground-Truthing:** Create a functional community reporting channel where residents can document localized flood heights and structural cracks, providing empirical field data to validate geodetic models.
+5. **Advocate for Root-Cause Policy Interventions:** Highlight actionable mitigation solutions—such as transitioning to the Bulacan Bulk Water Supply Project and enacting strict well moratoria—moving beyond reactive band-aids like perpetual road raising.
+
+**Target Beneficiaries:**
 * Local residents and community youth seeking practical tidal transit and flood awareness.
 * High school and collegiate Environmental Science students and teachers.
 * Barangay Disaster Risk Reduction and Management Councils (BDRRMC) and municipal planners.
@@ -64,67 +80,75 @@ The primary goal of the Hagonoy GroundWatch project is to bridge the critical ga
 
 ## III. Description of the Website
 
-### 3.1 Website Architecture & Key Pages/Sections
-Hagonoy GroundWatch is engineered as a high-density, accessible, responsive single-page platform designed around civic observatory and scientific dashboard design principles:
+### 3.1 Platform Design & Functional Modules
 
-* **Real-Time Telemetry Bar & Navigation Header:** Fixed top ribbon displaying active geographic coordinates (`14.8344° N, 120.7329° E`), basin identifiers, and critical status indicators, accompanied by smooth-scroll section routing. Includes responsive mobile drawer and instant modal trigger.
-* **Civic Observatory Hero & KPI Matrix:** Displays high-priority telemetry cards communicating verified scientific benchmarks:
-  * *Peak Subsidence Rate:* 2.5 – 5.2 cm/year.
-  * *Cumulative Drop (2000–2026):* ~1.14 meters (equivalent to one building story sunken).
-  * *Tidal Flooding Frequency:* 180+ days/year.
-  * *Exposed Population:* 135,000+ citizens across 26 barangays.
-* **Geological Science Overview:** A step-by-step breakdown of natural hydrostatic balance versus pore depressurization and clay collapse, addressing the "sunny-day flooding" paradox.
-* **Causes, Dynamics & Community Impact:** An interactive tabbed interface examining:
-  * *Causes:* Anthropogenic deep-well overdrafting, soft Quaternary alluvium compaction, and amplified relative sea-level rise.
-  * *Impacts:* Permanent tidal inundation, civil infrastructure settlement, shallow well salinization (>1,200 mg/L chlorides), and aquaculture economic losses.
-* **Interactive Leaflet Geospatial Hazard Map:** Dynamic vector map rendering custom hazard markers across Hagonoy sectors (Brgy. Pugad, Tibaguin, San Pascual, Mercado, Santa Elena, Santa Cruz, San Agustin, San Pedro). Includes risk filtering (Critical, Severe, Moderate), fly-to zoom transitions, critical coastal hazard polygon corridor, and a Sector Geological Dossier modal.
-* **Aquifer Stress Simulator & Literacy Quiz:** 
-  * *Simulator:* Slider-driven mathematical model calculating annual subsidence rate (cm/yr), aquifer recharge deficit (m³/day), and 1-meter sink timelines based on extraction volume and soil compressibility.
-  * *Quiz:* 3-question literacy check with automated grading and detailed scientific rationale feedback.
-* **Multi-Tier Mitigation Framework:** Categorized actionable strategies across Community (mangrove bioshields, rainwater harvesting), LGU (deep-well permits, zoning), and National levels (Bulacan Bulk Water integration, coastal defense masterplans).
-* **Citizen Reporting Ingestion Portal:** A functional report submission engine featuring localStorage persistence, interactive confirmation dialogs, telemetry tracking ID receipts (HGW-XXXX), and synchronized live feed updates.
-* **Academic References Page:** Formatted in strict APA 7th Edition with hyperlinked DOIs and contextual relevance summaries.
+Rather than building a standard static informational website, our team architected Hagonoy GroundWatch as a responsive, single-page civic telemetry dashboard. We prioritized clarity, data density, and fast loading speeds so the site remains fully accessible on budget smartphones and mobile data connections. The application integrates five primary modules:
 
-### 3.2 Technologies & Frameworks Used
-* **Frontend Library:** React 19 + Vite (enabling clean modular component architecture, zero runtime overhead, and optimized tree-shaken static production builds).
-* **Styling & Design Tokens:** Tailwind CSS v4 using a customized civic telemetry palette:
-  * *Background:* Slate-50 flat canvas (`#F8FAFC`).
-  * *Text:* Slate-900 high contrast (`#0F172A`).
-  * *Hydrology Accent:* Cyan-700 (`#0E7490`).
-  * *Alert States:* Amber-600 (`#D97706`) and Red-600 (`#DC2626`).
-* **Interactive Mapping Engine:** Leaflet.js v1.9.4 with OpenStreetMap standard tiles (100% free, zero API key dependency, lightweight, fast mobile load).
-* **Iconography:** Lucide React SVG vector system.
-* **Persistence & Citizen Telemetry:** Browser HTML5 `localStorage` API + Google Forms embed compatibility.
-* **Automated Quality Assurance:** Playwright E2E Test Suite (30/30 functional assertions passed, 7-viewport responsive validation).
-* **Deployment Pipeline:** Continuous deployment linked to GitHub `main` branch hosted on Render.
+#### Table 2. Functional Architecture and Educational Capabilities of GroundWatch
+
+| Module Name | Technical & Data Implementation | Educational & Civic Function |
+| :--- | :--- | :--- |
+| **Interactive GIS Hazard Map** | Leaflet.js engine with custom GeoJSON polygons, sector search filters, risk-coded markers, and detailed geoscientific popups. | Visualizes localized ground sinking rates across 8 key sectors; allows users to fly to their own barangay and view geological hazards. |
+| **Compaction Cycle Explorer** | Interactive 3-stage visual diagram depicting pore pressure decline, clay dewatering, and permanent sediment collapse. | Breaks down complex soil mechanics into an intuitive visual story showing why groundwater mining causes permanent, irreversible land loss. |
+| **Aquifer Stress Simulator** | Dynamic mathematical model calculating annual subsidence (cm/yr) and 1-meter sink timelines from pumping volume and soil compressibility. | Lets students manipulate extraction sliders and run real-world presets (e.g., Fishpond Cluster vs. Bulk Surface Water Transition) to see immediate impacts. |
+| **Citizen Science Incident Portal** | Validated report form with localStorage persistence, confirmation modals, tracking ID receipts (HGW-XXXX), and a searchable live register. | Empowers residents to report flood depths and foundation damage, providing grassroots verification that complements remote satellite data. |
+| **Multi-Tier Mitigation Guide** | Structured policy matrix and interactive citizen pledge checklist categorizing actions across Community, LGU, and National tiers. | Moves beyond complaints by outlining concrete responsibilities, such as mangrove planting for citizens and bulk water piped lines for government. |
+
+### 3.2 Technologies & Engineering Stack
+
+As IT majors, selecting the right software stack was critical to ensure the platform remains fast, reliable, and completely free to host and maintain. We avoided heavy commercial APIs that require paid subscriptions or credit card billing:
+
+#### Table 3. Technology Stack and Implementation Rationale
+
+| Technology Component | Tool / Library Selected | Student Engineering Rationale |
+| :--- | :--- | :--- |
+| **Frontend Framework** | `React 19 + Vite 8` | Provides lightning-fast build times, modular component reusability, and tiny bundle sizes (<150 kB gzip). |
+| **Responsive Layout & Styling** | `Tailwind CSS v4` | Enables clean, utility-first responsive styling; customized with an instrument-grade palette (Slate-900, Cyan-700, Amber-600). |
+| **Geospatial Mapping** | `Leaflet.js 1.9.4 + OpenStreetMap` | 100% open-source mapping engine without API key limits or billing overhead; lightweight on mobile hardware. |
+| **Vector Graphics** | `Lucide React` | Clean SVG iconography that scales crisply on retina displays without bloating page weight. |
+| **Data Persistence** | `HTML5 LocalStorage API` | Allows field reports to persist on the user's device without requiring backend database servers or account registration. |
+| **Automated Quality Assurance** | `Playwright E2E Test Suite` | Automated headless browser testing ensuring 29 verified assertions pass with zero layout overflow across 7 device viewports. |
 
 ---
 
 ## IV. Environmental Significance
 
 ### 4.1 Raising Public Awareness in Vulnerable Sectors
-In many coastal towns across Central Luzon, land subsidence is an invisible hazard. Unlike a typhoon or an earthquake, land sinks at rates measured in centimeters per year—gradual enough that communities adapt incrementally by lifting furniture, constructing wooden catwalks, or raising roadbeds, without interrogating the underlying hydrogeological cause.
 
-Hagonoy GroundWatch makes the invisible visible. By placing empirical numbers (e.g., *“Your barangay is sinking at 4.9 cm every year”*) alongside an interactive map, citizens can visualize the trajectory of their community over 5, 10, and 20-year horizons. This shifts community perception from passive resignation to informed civic advocacy.
+One of the biggest challenges in addressing land subsidence in coastal Bulacan is that it is an invisible hazard. Unlike an earthquake or a typhoon that strikes with sudden destructive force, land subsidence operates silently, millimeter by millimeter. Communities adapt incrementally: homeowners elevate their furniture, add concrete steps to their doorways, and build wooden catwalks across flooded streets. Because this adaptation happens gradually over decades, the public begins to treat chronic flooding as a normal, unchangeable fact of life.
+
+Hagonoy GroundWatch makes this hidden hazard visible. By presenting actual geodetic measurements (such as *"Brgy. Pugad has sunk over 1.2 meters since 2000"*), citizens can finally understand the true magnitude of what is happening under their feet. Visualizing these subsidence numbers shifts the community conversation from passive acceptance of "bad luck" toward demanding meaningful municipal oversight of deep-well water extraction.
 
 ### 4.2 Contribution to Environmental Science Education
-For educators and students, GroundWatch serves as a live, interactive laboratory demonstrating key concepts in environmental geology:
-* **The Hydrologic Cycle & Groundwater Mechanics:** Illustrates how human extraction rates exceeding natural recharge destabilize confinement pressures.
-* **Compound Climate Hazards:** Demonstrates how local anthropogenic environmental degradation amplifies global climate change impacts.
-* **Citizen Science in Disaster Risk Reduction:** Models how crowdsourced qualitative observations can corroborate satellite geodetic models.
+
+For students and educators, GroundWatch serves as an interactive digital laboratory that connects textbook environmental science concepts with an urgent local crisis:
+
+* **Groundwater Hydrology & Overdraft:** Students see directly how extracting water faster than natural recharge depletes confined aquifers and permanently destroys underground water storage.
+* **Compound Climate Threats:** The platform demonstrates how human-induced land subsidence multiplies the impacts of global sea level rise, turning normal high tides into destructive floods.
+* **Role of Citizen Science:** GroundWatch models how crowdsourced community observations can corroborate high-tech satellite radar data, proving that civic engagement is essential for disaster risk reduction.
 
 ---
 
-## V. Conclusion & Recommendations
+## V. Conclusion & Policy Recommendations
 
-### 5.1 Summary of Learning & Project Outcomes
-Developing Hagonoy GroundWatch demonstrated that technological solutions in environmental science are most potent when paired with rigorous civic communication. Sinking land in Hagonoy is not an unsolvable mystery; it is a direct consequence of unregulated subterranean water mining in a fragile river delta. The website proves that modern web technologies—when stripped of superficial decorative clutter—can deliver actionable, scientifically validated environmental public infrastructure.
+### 5.1 Summary of Learning & Student Reflection
 
-### 5.2 Strategic Recommendations for Hagonoy LGU
-1. **Accelerate Bulk Surface Water Conversion:** Urgently connect all 26 barangays to the Bulacan Bulk Water Supply Project to eliminate groundwater extraction from coastal aquifers.
-2. **Implement an Immediate Moratorium on Aquaculture Deep Wells:** Require brackish fishponds to recycle surface water or utilize regulated estuary intake rather than drawing from deep freshwater aquifers.
-3. **Mandate Nature-Based Bioshields:** Replant resilient mangrove corridors along the Hagonoy River delta to trap marine sediments and build up natural substrate elevation.
-4. **Maintain Long-Term InSAR & GPS Geodetic Stations:** Partner with UP-NIGS and DOST to install permanent continuous GNSS stations in Hagonoy to monitor ground movement in real time.
+Working on Hagonoy GroundWatch has been an eye-opening journey for our team. When we started this project, we assumed that flooding in Hagonoy was purely an unavoidable consequence of climate change and proximity to Manila Bay. Through our research and data synthesis, we learned that the root problem is primarily subterranean water mining. 
+
+As IT students, this project showed us that technology has a vital role to play in environmental stewardship. Software can take dense scientific studies—which are usually locked behind paywalls or buried in academic journals—and transform them into public civic tools that inform and protect vulnerable communities.
+
+### 5.2 Strategic Policy Recommendations for Hagonoy LGU
+
+Stopping land subsidence in Hagonoy will not happen overnight, but scientific evidence shows that when groundwater overdraft stops, subsidence velocities decelerate dramatically (as observed in Tokyo and Bangkok). Based on our findings, we propose four concrete interventions:
+
+#### Table 4. Recommended Policy and Engineering Interventions for Hagonoy
+
+| Intervention Level | Proposed Action Plan | Lead Agency | Projected Environmental Impact |
+| :--- | :--- | :--- | :--- |
+| **Municipal (Immediate)** | Enact an immediate moratorium on drilling new commercial deep wells, especially for fishponds and ice plants. Install flow meters on existing high-capacity pumps. | Hagonoy LGU & NWRB | Stops rapid depressurization of deep aquifers within 6 to 12 months. |
+| **Provincial (Strategic)** | Accelerate pipeline connections to the Bulacan Bulk Water Supply Project to deliver treated surface water from Angat Reservoir to all 26 barangays. | MWSS & Local Water District | Eliminates municipal reliance on groundwater, allowing pore-water pressures to stabilize. |
+| **Ecological (Long-Term)** | Replant and protect mangrove greenbelts (*Rhizophora* and *Avicennia*) along the river delta and coastal perimeter. | DENR Region III & BDRRMC | Traps tidal sediments, dampens wave energy, and naturally accretes ground elevation over time. |
+| **Scientific (Monitoring)** | Establish permanent continuous GNSS stations and corner-reflector radar targets in Hagonoy to track ground motion continuously. | UP-NIGS, DOST & PAGASA | Provides empirical ground-truth telemetry to guide future municipal zoning and infrastructure investments. |
 
 ---
 
