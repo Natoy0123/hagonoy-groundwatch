@@ -31,11 +31,11 @@ export default function Mitigation() {
           {MITIGATION_STRATEGIES.map((tier, idx) => (
             <div
               key={idx}
-              className="bg-white border border-slate-200 rounded p-6 sm:p-7 flex flex-col justify-between hover:border-slate-300 transition shadow-xs"
+              className="bg-white border border-slate-200 rounded p-6 sm:p-7 flex flex-col justify-between interactive-card"
             >
               <div>
                 <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
-                  <div className="p-2.5 rounded bg-slate-50 border border-slate-200">
+                  <div className="p-2.5 rounded bg-slate-50 border border-slate-200 shadow-2xs">
                     {getIcon(tier.level)}
                   </div>
                   <div>
@@ -57,7 +57,7 @@ export default function Mitigation() {
                         {act.desc}
                       </p>
                       <div className="pl-6 pt-1">
-                        <span className="inline-block text-[10px] font-mono font-semibold text-cyan-900 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">
+                        <span className="inline-block text-[10px] font-mono font-semibold text-cyan-900 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100 transition-colors hover:bg-cyan-100">
                           Target Impact: {act.impact}
                         </span>
                       </div>
@@ -73,8 +73,8 @@ export default function Mitigation() {
           ))}
         </div>
 
-        {/* Highlight Callout Box: The Critical Paradigm Shift */}
-        <div className="mt-12 bg-white border border-cyan-300 rounded p-6 sm:p-8 relative overflow-hidden">
+        {/* Highlight Callout Box */}
+        <div className="mt-12 bg-white border border-cyan-300 rounded p-6 sm:p-8 relative overflow-hidden interactive-card">
           <div className="max-w-3xl">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-900">
               The Critical Engineering Paradigm Shift

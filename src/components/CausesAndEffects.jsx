@@ -24,11 +24,11 @@ export default function CausesAndEffects() {
             The catastrophic sinking of Hagonoy is an intersection of anthropogenic exploitation and fragile deltaic geography. Explore the key drivers and how they manifest across daily community life.
           </p>
 
-          {/* Tab Switcher */}
+          {/* Tab Switcher with smooth transition */}
           <div className="mt-6 inline-flex p-1 bg-slate-100 rounded border border-slate-200">
             <button
               onClick={() => setActiveTab('causes')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition ${
+              className={`px-4 py-1.5 text-xs font-semibold rounded transition-all duration-200 ${
                 activeTab === 'causes'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900'
@@ -38,7 +38,7 @@ export default function CausesAndEffects() {
             </button>
             <button
               onClick={() => setActiveTab('effects')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition ${
+              className={`px-4 py-1.5 text-xs font-semibold rounded transition-all duration-200 ${
                 activeTab === 'effects'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900'
@@ -51,7 +51,7 @@ export default function CausesAndEffects() {
 
         {/* Tab 1: Causes */}
         {activeTab === 'causes' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
             {/* Cause Selection Rail */}
             <div className="lg:col-span-5 space-y-3">
               {CAUSES_DATA.map((cause) => {
@@ -60,17 +60,17 @@ export default function CausesAndEffects() {
                   <button
                     key={cause.id}
                     onClick={() => setSelectedCauseId(cause.id)}
-                    className={`w-full text-left p-4 rounded border transition ${
+                    className={`w-full text-left p-4 rounded border transition-all duration-200 ${
                       isSelected
-                        ? 'bg-cyan-50/70 border-cyan-700 text-cyan-950 shadow-xs'
-                        : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'
+                        ? 'bg-cyan-50/80 border-cyan-700 text-cyan-950 shadow-xs translate-x-1'
+                        : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 hover:bg-slate-50'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] font-mono font-medium text-slate-500 uppercase">
                         {cause.category}
                       </span>
-                      <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                      <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded transition-transform duration-200 ${
                         cause.severity === 'Critical'
                           ? 'bg-red-100 text-red-800'
                           : 'bg-amber-100 text-amber-800'
@@ -80,7 +80,7 @@ export default function CausesAndEffects() {
                     </div>
                     <div className="font-bold text-sm sm:text-base mt-1.5 flex items-center justify-between">
                       <span>{cause.title}</span>
-                      <ChevronRight className={`w-4 h-4 text-slate-400 ${isSelected ? 'text-cyan-700' : ''}`} />
+                      <ChevronRight className={`w-4 h-4 transition-transform duration-200 ${isSelected ? 'text-cyan-700 translate-x-0.5' : 'text-slate-400'}`} />
                     </div>
                     <div className="mt-2 text-xs font-mono text-cyan-800 font-medium">
                       Metric: {cause.metric}
@@ -90,8 +90,11 @@ export default function CausesAndEffects() {
               })}
             </div>
 
-            {/* Detailed Cause Dossier */}
-            <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded p-6 sm:p-8">
+            {/* Detailed Cause Dossier with Key for re-animating on change */}
+            <div
+              key={selectedCause.id}
+              className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded p-6 sm:p-8 animate-fade-in shadow-xs"
+            >
               <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                 <div>
                   <span className="text-xs font-mono uppercase text-slate-500">{selectedCause.category}</span>
@@ -125,7 +128,7 @@ export default function CausesAndEffects() {
 
               <div className="mt-8 pt-4 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
                 <span>Verified in: UP-NIGS & MGB Region III Technical Papers</span>
-                <a href="#references" className="text-cyan-800 font-semibold hover:underline">
+                <a href="#references" className="text-cyan-800 font-semibold hover:underline transition-colors">
                   View APA Citations →
                 </a>
               </div>
@@ -135,11 +138,11 @@ export default function CausesAndEffects() {
 
         {/* Tab 2: Effects & Community Impact */}
         {activeTab === 'effects' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
             {EFFECTS_DATA.map((effect) => (
               <div
                 key={effect.id}
-                className="bg-slate-50 border border-slate-200 rounded p-6 flex flex-col justify-between hover:border-slate-300 transition"
+                className="bg-slate-50 border border-slate-200 rounded p-6 flex flex-col justify-between interactive-card"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">

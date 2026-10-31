@@ -3,7 +3,7 @@ import { Send, CheckCircle2, MessageSquare, AlertCircle, Camera, ExternalLink, L
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
 export default function CommunityReporting({ isOpenModal, onCloseModal }) {
-  const [activeFormMode, setActiveFormMode] = useState('direct'); // 'direct' or 'google'
+  const [activeFormMode, setActiveFormMode] = useState('direct');
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
 
   // Form Fields
@@ -93,7 +93,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
         <button
           type="button"
           onClick={() => setActiveFormMode('direct')}
-          className={`flex-1 py-1.5 text-xs font-semibold rounded transition ${
+          className={`flex-1 py-1.5 text-xs font-semibold rounded transition-all duration-200 ${
             activeFormMode === 'direct'
               ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
               : 'text-slate-600 hover:text-slate-900'
@@ -104,7 +104,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
         <button
           type="button"
           onClick={() => setActiveFormMode('google')}
-          className={`flex-1 py-1.5 text-xs font-semibold rounded transition ${
+          className={`flex-1 py-1.5 text-xs font-semibold rounded transition-all duration-200 ${
             activeFormMode === 'google'
               ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
               : 'text-slate-600 hover:text-slate-900'
@@ -117,7 +117,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
       {activeFormMode === 'direct' ? (
         <form onSubmit={handleSubmit} className="space-y-4">
           {submittedSuccess && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-xs flex items-center gap-2">
+            <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-xs flex items-center gap-2 animate-fade-in">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>Observation recorded successfully and added to the community telemetry log.</span>
             </div>
@@ -131,7 +131,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               <select
                 value={barangay}
                 onChange={(e) => setBarangay(e.target.value)}
-                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none"
+                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
               >
                 {HAGONOY_BARANGAYS.map((b) => (
                   <option key={b.name} value={b.name}>
@@ -148,7 +148,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               <select
                 value={issueType}
                 onChange={(e) => setIssueType(e.target.value)}
-                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none"
+                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
               >
                 <option value="Sunny-Day Tidal Flooding">Sunny-Day Tidal Flooding</option>
                 <option value="Structural Foundation Cracking">Structural Foundation Cracking</option>
@@ -167,7 +167,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               <select
                 value={waterDepth}
                 onChange={(e) => setWaterDepth(e.target.value)}
-                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none"
+                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
               >
                 <option value="None / Structural Only">None / Structural Issue Only</option>
                 <option value="1 - 6 inches (Ankle level)">1 - 6 inches (Ankle level)</option>
@@ -184,7 +184,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               <select
                 value={reporterType}
                 onChange={(e) => setReporterType(e.target.value)}
-                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none"
+                className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
               >
                 <option value="Resident">Barangay Resident</option>
                 <option value="LGU / Barangay Official">LGU / Barangay Official</option>
@@ -204,7 +204,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe street name, time of high tide inundation, foundation cracks observed, or house floor lifting..."
-              className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none"
+              className="w-full text-xs p-2.5 rounded border border-slate-300 bg-white text-slate-800 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 outline-none transition-colors"
             />
           </div>
 
@@ -214,7 +214,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
             </span>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded bg-cyan-700 text-white hover:bg-cyan-800 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded bg-cyan-700 text-white hover:bg-cyan-800 active:scale-95 transition-all duration-150 shadow-xs hover:shadow-sm"
             >
               <Send className="w-3.5 h-3.5" />
               Submit Field Report
@@ -223,7 +223,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
         </form>
       ) : (
         /* Google Form Integration Mode */
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in">
           <div className="p-4 bg-slate-50 border border-slate-200 rounded text-xs text-slate-700">
             <div className="font-bold text-slate-900 mb-1 flex items-center justify-between">
               <span>Google Form Prototype Integration</span>
@@ -240,11 +240,13 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               This module embeds an official community intake form for synchronization with municipal disaster risk reduction (MDRRMO) spreadsheets.
             </p>
 
-            {/* Embedded Google Form Mock / Real Container */}
-            <div className="border border-slate-300 rounded overflow-hidden bg-white shadow-xs">
+            <div className="border border-slate-300 rounded overflow-hidden bg-white shadow-xs interactive-card">
               <div className="p-3 bg-slate-100 border-b border-slate-200 text-[11px] font-mono flex items-center justify-between">
                 <span>Google Form: Hagonoy Land Subsidence Citizen Intake</span>
-                <span className="text-emerald-700 font-semibold">● Form Active</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 radar-dot"></span>
+                  Form Active
+                </span>
               </div>
               <div className="p-6 text-center space-y-3">
                 <MessageSquare className="w-8 h-8 text-cyan-700 mx-auto" />
@@ -257,7 +259,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
                 <div className="pt-2">
                   <button
                     onClick={() => setActiveFormMode('direct')}
-                    className="px-4 py-2 text-xs font-semibold rounded bg-cyan-700 text-white hover:bg-cyan-800"
+                    className="px-4 py-2 text-xs font-semibold rounded bg-cyan-700 text-white hover:bg-cyan-800 active:scale-95 transition-all shadow-xs"
                   >
                     Use Built-in Interactive Form Instead
                   </button>
@@ -273,8 +275,8 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
   // If used as modal
   if (isOpenModal) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-        <div className="bg-white border border-slate-200 rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-xl">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+        <div className="bg-white border border-slate-200 rounded-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-xl animate-scale-in">
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
             <div>
               <h3 className="font-bold text-slate-900 text-base">
@@ -286,7 +288,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
             </div>
             <button
               onClick={onCloseModal}
-              className="text-slate-400 hover:text-slate-600 text-lg font-bold p-1"
+              className="text-slate-400 hover:text-slate-700 active:scale-90 transition-transform text-lg font-bold p-1 rounded"
             >
               ✕
             </button>
@@ -303,7 +305,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Form Box */}
-          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded p-6 sm:p-8">
+          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded p-6 sm:p-8 shadow-xs">
             <div className="max-w-xl mb-6">
               <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-cyan-800">
                 <MessageSquare className="w-4 h-4 text-cyan-700" />
@@ -320,7 +322,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
           </div>
 
           {/* Right: Live Community Log Feed */}
-          <div className="lg:col-span-5 bg-white border border-slate-200 rounded p-6">
+          <div className="lg:col-span-5 bg-white border border-slate-200 rounded p-6 shadow-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
               <div className="flex items-center gap-2">
                 <ListFilter className="w-4 h-4 text-slate-600" />
@@ -328,7 +330,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
                   Recent Ground-Truth Logs
                 </h3>
               </div>
-              <span className="text-[11px] font-mono text-cyan-800 font-semibold">
+              <span className="text-[11px] font-mono text-cyan-800 font-semibold px-2 py-0.5 rounded bg-cyan-50 border border-cyan-200">
                 {reportsList.length} Verified
               </span>
             </div>
@@ -337,7 +339,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
               {reportsList.map((rep) => (
                 <div
                   key={rep.id}
-                  className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1.5"
+                  className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1.5 interactive-card"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-900">

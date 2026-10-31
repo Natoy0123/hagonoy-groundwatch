@@ -16,7 +16,7 @@ export default function Hero({ onOpenReport }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Urgent Alert Banner */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-amber-50 border border-amber-200 text-amber-900 text-xs font-medium mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-amber-50 border border-amber-200 text-amber-900 text-xs font-medium mb-6 animate-fade-in transition-transform duration-200 hover:scale-[1.01]">
           <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0" />
           <span>
             <strong>Scientific Assessment:</strong> Coastal Bulacan is subsiding up to <strong>15× faster</strong> than global sea level rise.
@@ -24,7 +24,7 @@ export default function Hero({ onOpenReport }) {
         </div>
 
         {/* Hero Headings */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12 animate-fade-in-up">
           <div className="lg:col-span-8">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Community-Based Environmental Telemetry for Land Subsidence in Hagonoy, Bulacan
@@ -37,51 +37,51 @@ export default function Hero({ onOpenReport }) {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#hazard-map"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-cyan-700 text-white font-semibold text-sm hover:bg-cyan-800 transition shadow-xs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-cyan-700 text-white font-semibold text-sm hover:bg-cyan-800 active:scale-95 transition-all duration-150 shadow-xs hover:shadow-md"
               >
                 <Compass className="w-4 h-4" />
                 Explore Hazard Map
               </a>
               <button
                 onClick={onOpenReport}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-white text-slate-800 font-semibold text-sm border border-slate-300 hover:bg-slate-50 transition shadow-xs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-white text-slate-800 font-semibold text-sm border border-slate-300 hover:bg-slate-50 hover:border-slate-400 active:scale-95 transition-all duration-150 shadow-xs hover:shadow-sm"
               >
                 Log Sinking / Flood Incident
               </button>
               <a
                 href="#causes-effects"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 text-slate-600 hover:text-slate-900 text-sm font-medium"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 text-slate-600 hover:text-slate-900 text-sm font-medium transition-colors duration-150 group"
               >
                 Learn Causes
-                <ArrowDown className="w-4 h-4" />
+                <ArrowDown className="w-4 h-4 transition-transform duration-200 group-hover:translate-y-1" />
               </a>
             </div>
           </div>
 
           {/* Quick Context Card */}
-          <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded p-5">
+          <div className="lg:col-span-4 bg-slate-50 border border-slate-200 rounded p-5 interactive-card">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <span className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">
                 Ground Zero Summary
               </span>
-              <span className="text-xs font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded">
+              <span className="text-xs font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded transition-transform duration-200 hover:scale-105">
                 HIGH VULNERABILITY
               </span>
             </div>
             <div className="mt-4 space-y-3 text-xs text-slate-700">
-              <div className="flex justify-between py-1 border-b border-slate-100">
+              <div className="flex justify-between py-1 border-b border-slate-100 hover:bg-slate-100/50 px-1 rounded transition-colors">
                 <span className="text-slate-500">Location:</span>
                 <span className="font-semibold text-slate-800">Hagonoy River & Manila Bay Delta</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-100">
+              <div className="flex justify-between py-1 border-b border-slate-100 hover:bg-slate-100/50 px-1 rounded transition-colors">
                 <span className="text-slate-500">Subsurface Matrix:</span>
                 <span className="font-semibold text-slate-800">Unconsolidated Silt & Clay Alluvium</span>
               </div>
-              <div className="flex justify-between py-1 border-b border-slate-100">
+              <div className="flex justify-between py-1 border-b border-slate-100 hover:bg-slate-100/50 px-1 rounded transition-colors">
                 <span className="text-slate-500">Primary Stressor:</span>
                 <span className="font-semibold text-slate-800">Commercial Aquaculture Deep Wells</span>
               </div>
-              <div className="flex justify-between py-1">
+              <div className="flex justify-between py-1 hover:bg-slate-100/50 px-1 rounded transition-colors">
                 <span className="text-slate-500">Primary Manifestation:</span>
                 <span className="font-semibold text-red-700">Permanent 'Sunny Day' Tidal Floods</span>
               </div>
@@ -94,16 +94,17 @@ export default function Hero({ onOpenReport }) {
 
         {/* Telemetry KPI Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {TELEMETRY_STATS.map((stat) => (
+          {TELEMETRY_STATS.map((stat, idx) => (
             <div
               key={stat.id}
-              className="bg-white border border-slate-200 rounded p-4 hover:border-slate-300 transition"
+              className="bg-white border border-slate-200 rounded p-4 interactive-card"
+              style={{ animationDelay: `${idx * 80}ms` }}
             >
               <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-1">
                 {stat.label}
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold text-slate-900 tracking-tight font-mono">
+                <span className="text-3xl font-extrabold text-slate-900 tracking-tight font-mono transition-colors duration-150 hover:text-cyan-800">
                   {stat.value}
                 </span>
                 <span className="text-xs font-medium text-slate-600">{stat.unit}</span>
