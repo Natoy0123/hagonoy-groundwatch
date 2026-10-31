@@ -84,12 +84,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
       {/* Sticky Header */}
       <Header onOpenReport={() => setIsModalOpen(true)} />
 
       {/* Main Content Sections */}
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-hidden">
         <Hero onOpenReport={() => setIsModalOpen(true)} />
         <Overview />
         <CausesAndEffects />
