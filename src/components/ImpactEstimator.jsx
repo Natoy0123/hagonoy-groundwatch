@@ -6,8 +6,8 @@ export default function ImpactEstimator() {
 
   // Calculator State
   const [wellCount, setWellCount] = useState(15);
-  const [dailyPumpingLiters, setDailyPumpingLiters] = useState(25000); // 25,000L (e.g. fishpond/small enterprise)
-  const [soilType, setSoilType] = useState('clay'); // 'clay' (deltaic soft) or 'sand' (consolidated)
+  const [dailyPumpingLiters, setDailyPumpingLiters] = useState(25000);
+  const [soilType, setSoilType] = useState('clay');
 
   // Computation logic grounded in hydrogeological principles
   const clayMultiplier = soilType === 'clay' ? 1.6 : 0.7;
@@ -79,25 +79,25 @@ export default function ImpactEstimator() {
   };
 
   return (
-    <section id="estimator" className="py-16 bg-white border-b border-slate-200">
+    <section id="estimator" className="py-14 sm:py-20 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-10">
-          <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-cyan-800">
-            <Calculator className="w-4 h-4 text-cyan-700" />
+        <div className="max-w-3xl mb-10 sm:mb-12">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-cyan-800">
+            <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-700" />
             <span>Interactive Educational Sandbox</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mt-2.5 tracking-tight">
             Aquifer Stress Calculator & Literacy Quiz
           </h2>
-          <p className="mt-3 text-slate-600 text-base leading-relaxed">
+          <p className="mt-3.5 sm:mt-4 text-slate-700 text-base sm:text-lg leading-relaxed">
             Understand how localized water withdrawals translate directly into land deformation, or test your environmental science literacy on coastal delta dynamics.
           </p>
 
-          <div className="mt-6 inline-flex p-1 bg-slate-100 rounded border border-slate-200">
+          <div className="mt-7 inline-flex p-1.5 bg-slate-100 rounded-md border border-slate-200 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('calculator')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition ${
+              className={`flex-1 sm:flex-none px-5 py-2.5 text-xs sm:text-sm font-bold rounded transition ${
                 activeTab === 'calculator'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900'
@@ -107,7 +107,7 @@ export default function ImpactEstimator() {
             </button>
             <button
               onClick={() => setActiveTab('quiz')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition ${
+              className={`flex-1 sm:flex-none px-5 py-2.5 text-xs sm:text-sm font-bold rounded transition ${
                 activeTab === 'quiz'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900'
@@ -120,21 +120,21 @@ export default function ImpactEstimator() {
 
         {/* Simulator Tab */}
         {activeTab === 'calculator' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
             {/* Input Controls */}
-            <div className="lg:col-span-6 bg-slate-50 border border-slate-200 rounded p-6 sm:p-7">
-              <h3 className="text-base font-bold text-slate-900 mb-5 flex items-center gap-2">
-                <Calculator className="w-4 h-4 text-cyan-700" />
+            <div className="lg:col-span-6 bg-slate-50 border border-slate-200 rounded-md p-6 sm:p-8">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-6 flex items-center gap-2.5">
+                <Calculator className="w-5 h-5 text-cyan-700" />
                 Simulate Barangay Extraction Parameters
               </h3>
 
               {/* Slider 1: Well Count */}
-              <div className="mb-6">
-                <div className="flex justify-between items-baseline mb-2">
-                  <label className="text-xs font-medium text-slate-700">
+              <div className="mb-7">
+                <div className="flex justify-between items-baseline mb-2.5">
+                  <label className="text-sm sm:text-base font-semibold text-slate-800">
                     Active Deep Wells per km²:
                   </label>
-                  <span className="font-mono text-sm font-bold text-slate-900">{wellCount} wells</span>
+                  <span className="font-mono text-base font-bold text-cyan-900">{wellCount} wells</span>
                 </div>
                 <input
                   type="range"
@@ -142,22 +142,22 @@ export default function ImpactEstimator() {
                   max="50"
                   value={wellCount}
                   onChange={(e) => setWellCount(Number(e.target.value))}
-                  className="w-full accent-cyan-700 h-1.5 bg-slate-200 rounded cursor-pointer"
+                  className="w-full accent-cyan-700 h-2 bg-slate-200 rounded cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                <div className="flex justify-between text-xs text-slate-500 font-mono mt-1.5 font-medium">
                   <span>Low density (2)</span>
                   <span>Intensive cluster (50)</span>
                 </div>
               </div>
 
               {/* Slider 2: Daily Pumping */}
-              <div className="mb-6">
-                <div className="flex justify-between items-baseline mb-2">
-                  <label className="text-xs font-medium text-slate-700">
+              <div className="mb-7">
+                <div className="flex justify-between items-baseline mb-2.5">
+                  <label className="text-sm sm:text-base font-semibold text-slate-800">
                     Estimated Daily Pumping Rate:
                   </label>
-                  <span className="font-mono text-sm font-bold text-slate-900">
-                    {dailyPumpingLiters.toLocaleString()} Liters / day
+                  <span className="font-mono text-base font-bold text-cyan-900">
+                    {dailyPumpingLiters.toLocaleString()} L / day
                   </span>
                 </div>
                 <input
@@ -167,60 +167,60 @@ export default function ImpactEstimator() {
                   step="5000"
                   value={dailyPumpingLiters}
                   onChange={(e) => setDailyPumpingLiters(Number(e.target.value))}
-                  className="w-full accent-cyan-700 h-1.5 bg-slate-200 rounded cursor-pointer"
+                  className="w-full accent-cyan-700 h-2 bg-slate-200 rounded cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                <div className="flex justify-between text-xs text-slate-500 font-mono mt-1.5 font-medium">
                   <span>Household (5,000L)</span>
-                  <span>Commercial Aquaculture (100,000L)</span>
+                  <span>Aquaculture / Industrial (100,000L)</span>
                 </div>
               </div>
 
               {/* Soil Matrix Selector */}
               <div className="mb-4">
-                <label className="text-xs font-medium text-slate-700 block mb-2">
+                <label className="text-sm sm:text-base font-semibold text-slate-800 block mb-2.5">
                   Geological Subsurface Lithology:
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <button
                     onClick={() => setSoilType('clay')}
-                    className={`p-3 text-left rounded border text-xs font-medium transition ${
+                    className={`p-3.5 text-left rounded-md border text-sm transition ${
                       soilType === 'clay'
-                        ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-semibold'
-                        : 'bg-white border-slate-200 text-slate-600'
+                        ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-bold shadow-2xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
                     <div className="font-bold">Soft Deltaic Clay (Hagonoy)</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">High compressibility (Cc &gt; 0.4)</div>
+                    <div className="text-xs text-slate-500 mt-1">High compressibility (Cc &gt; 0.4)</div>
                   </button>
                   <button
                     onClick={() => setSoilType('sand')}
-                    className={`p-3 text-left rounded border text-xs font-medium transition ${
+                    className={`p-3.5 text-left rounded-md border text-sm transition ${
                       soilType === 'sand'
-                        ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-semibold'
-                        : 'bg-white border-slate-200 text-slate-600'
+                        ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-bold shadow-2xs'
+                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
                     <div className="font-bold">Consolidated Sandy Silt</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5">Moderate compaction resistance</div>
+                    <div className="text-xs text-slate-500 mt-1">Moderate compaction resistance</div>
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Simulated Output Card */}
-            <div className="lg:col-span-6 bg-white border border-slate-200 rounded p-6 sm:p-7 shadow-xs">
-              <span className="text-xs font-mono font-semibold uppercase text-slate-500">
+            <div className="lg:col-span-6 bg-white border border-slate-200 rounded-md p-6 sm:p-8 shadow-xs">
+              <span className="text-xs sm:text-sm font-mono font-bold uppercase text-slate-500 tracking-wide">
                 Simulated Environmental Consequence
               </span>
-              <div className="mt-4 p-4 rounded bg-slate-50 border border-slate-200">
-                <div className="text-xs text-slate-600">Calculated Annual Subsidence Rate:</div>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-extrabold text-red-600 font-mono">
+              <div className="mt-4 p-5 rounded-md bg-slate-50 border border-slate-200">
+                <div className="text-xs sm:text-sm text-slate-600 font-medium">Calculated Annual Subsidence Rate:</div>
+                <div className="flex items-baseline gap-2.5 mt-2">
+                  <span className="text-4xl sm:text-5xl font-extrabold text-red-600 font-mono">
                     {estimatedSubsidenceCm}
                   </span>
-                  <span className="text-sm font-semibold text-slate-700 font-mono">cm / year</span>
+                  <span className="text-base sm:text-lg font-bold text-slate-700 font-mono">cm / year</span>
                 </div>
-                <div className="mt-2 text-xs text-slate-500">
+                <div className="mt-3 text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
                   {estimatedSubsidenceCm > 4.5
                     ? "🔴 Critical Hazard Level: Severe pore compaction leading to immediate chronic tidal flooding."
                     : estimatedSubsidenceCm > 2.5
@@ -229,23 +229,23 @@ export default function ImpactEstimator() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mt-4 font-mono text-xs">
-                <div className="p-3 border border-slate-200 rounded bg-white">
-                  <span className="text-[10px] text-slate-500 block uppercase">1-Meter Drop Timeline</span>
-                  <span className="text-xl font-bold text-slate-900 mt-1 block">~{yearsUntil1MeterDrop} Years</span>
-                  <span className="text-[10px] text-slate-500">at current rate</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 font-mono text-sm">
+                <div className="p-4 border border-slate-200 rounded-md bg-white">
+                  <span className="text-xs text-slate-500 block uppercase font-medium">1-Meter Drop Timeline</span>
+                  <span className="text-2xl font-bold text-slate-900 mt-1 block">~{yearsUntil1MeterDrop} Years</span>
+                  <span className="text-xs text-slate-500">at current rate</span>
                 </div>
-                <div className="p-3 border border-slate-200 rounded bg-white">
-                  <span className="text-[10px] text-slate-500 block uppercase">Aquifer Recharge Deficit</span>
-                  <span className="text-xl font-bold text-red-700 mt-1 block">
+                <div className="p-4 border border-slate-200 rounded-md bg-white">
+                  <span className="text-xs text-slate-500 block uppercase font-medium">Aquifer Deficit</span>
+                  <span className="text-2xl font-bold text-red-700 mt-1 block">
                     -{(dailyPumpingLiters * wellCount * 0.75 / 1000).toFixed(0)} m³/day
                   </span>
-                  <span className="text-[10px] text-slate-500">net groundwater loss</span>
+                  <span className="text-xs text-slate-500">net groundwater loss</span>
                 </div>
               </div>
 
-              <div className="mt-6 p-3 bg-cyan-50 border border-cyan-200 rounded text-xs text-cyan-950 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-cyan-800 shrink-0 mt-0.5" />
+              <div className="mt-6 p-4 bg-cyan-50 border border-cyan-200 rounded-md text-xs sm:text-sm text-cyan-950 flex items-start gap-3 leading-relaxed">
+                <AlertCircle className="w-5 h-5 text-cyan-800 shrink-0 mt-0.5" />
                 <span>
                   <strong>Key Takeaway:</strong> Transitioning from 15 deep wells to zero by connecting to surface bulk water halts {estimatedSubsidenceCm} cm of land loss every single year.
                 </span>
@@ -256,44 +256,44 @@ export default function ImpactEstimator() {
 
         {/* Quiz Tab */}
         {activeTab === 'quiz' && (
-          <div className="bg-slate-50 border border-slate-200 rounded p-6 sm:p-8 max-w-3xl mx-auto">
+          <div className="bg-slate-50 border border-slate-200 rounded-md p-6 sm:p-9 max-w-3xl mx-auto shadow-xs animate-fade-in">
             {!quizSubmitted ? (
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
-                  <span className="text-xs font-mono font-semibold uppercase text-slate-500">
+                <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 mb-3">
+                  <span className="text-xs sm:text-sm font-mono font-bold uppercase text-slate-600">
                     Question {currentQIndex + 1} of {quizQuestions.length}
                   </span>
-                  <span className="text-xs font-mono text-cyan-800 font-semibold">
+                  <span className="text-xs sm:text-sm font-mono text-cyan-800 font-bold">
                     Knowledge Check
                   </span>
                 </div>
 
                 {/* Step Progress Bar */}
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mb-6">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden mb-6 sm:mb-8">
                   <div
                     className="bg-cyan-700 h-full transition-all duration-300"
                     style={{ width: `${((currentQIndex + 1) / quizQuestions.length) * 100}%` }}
                   />
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-5">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-6 leading-snug">
                   {quizQuestions[currentQIndex].q}
                 </h3>
 
-                <div className="space-y-3 mb-8">
+                <div className="space-y-3.5 mb-8">
                   {quizQuestions[currentQIndex].options.map((option, optIdx) => {
                     const isSelected = selectedAnswers[currentQIndex] === optIdx;
                     return (
                       <button
                         key={optIdx}
                         onClick={() => handleSelectOption(optIdx)}
-                        className={`w-full text-left p-4 rounded border text-sm transition ${
+                        className={`w-full text-left p-4 sm:p-5 rounded-md border text-sm sm:text-base transition ${
                           isSelected
-                            ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-semibold'
-                            : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700'
+                            ? 'bg-cyan-50 border-cyan-700 text-cyan-950 font-bold shadow-2xs'
+                            : 'bg-white border-slate-200 hover:border-slate-300 text-slate-700 hover:bg-slate-50'
                         }`}
                       >
-                        <span className="inline-block w-5 font-mono text-slate-400">
+                        <span className="inline-block w-6 font-mono font-bold text-slate-400">
                           {String.fromCharCode(65 + optIdx)}.
                         </span>
                         {option.text}
@@ -302,11 +302,11 @@ export default function ImpactEstimator() {
                   })}
                 </div>
 
-                <div className="flex justify-between items-center pt-4 border-t border-slate-200">
+                <div className="flex justify-between items-center pt-5 border-t border-slate-200">
                   <button
                     disabled={currentQIndex === 0}
                     onClick={() => setCurrentQIndex(currentQIndex - 1)}
-                    className="px-4 py-2 text-xs font-semibold rounded border border-slate-300 bg-white text-slate-700 disabled:opacity-40"
+                    className="px-5 py-2.5 text-xs sm:text-sm font-bold rounded border border-slate-300 bg-white text-slate-700 disabled:opacity-40 hover:bg-slate-50 transition"
                   >
                     Previous
                   </button>
@@ -315,7 +315,7 @@ export default function ImpactEstimator() {
                     <button
                       disabled={selectedAnswers[currentQIndex] === undefined}
                       onClick={() => setCurrentQIndex(currentQIndex + 1)}
-                      className="px-5 py-2 text-xs font-semibold rounded bg-cyan-700 text-white disabled:opacity-40 hover:bg-cyan-800"
+                      className="px-6 py-2.5 text-xs sm:text-sm font-bold rounded bg-cyan-700 text-white disabled:opacity-40 hover:bg-cyan-800 transition active:scale-95"
                     >
                       Next Question
                     </button>
@@ -323,7 +323,7 @@ export default function ImpactEstimator() {
                     <button
                       disabled={selectedAnswers[currentQIndex] === undefined}
                       onClick={() => setQuizSubmitted(true)}
-                      className="px-5 py-2 text-xs font-semibold rounded bg-emerald-700 text-white disabled:opacity-40 hover:bg-emerald-800"
+                      className="px-6 py-2.5 text-xs sm:text-sm font-bold rounded bg-emerald-700 text-white disabled:opacity-40 hover:bg-emerald-800 transition active:scale-95"
                     >
                       Submit Quiz
                     </button>
@@ -334,37 +334,37 @@ export default function ImpactEstimator() {
               /* Quiz Results */
               <div>
                 <div className="text-center pb-6 border-b border-slate-200">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 font-bold font-mono text-xl flex items-center justify-center mx-auto mb-3">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-800 font-bold font-mono text-2xl flex items-center justify-center mx-auto mb-3">
                     {calculateScore()}/{quizQuestions.length}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">Quiz Completed</h3>
-                  <p className="text-xs text-slate-600 mt-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900">Quiz Completed</h3>
+                  <p className="text-sm text-slate-600 mt-1.5">
                     {calculateScore() === quizQuestions.length
                       ? "Outstanding comprehension of Hagonoy's environmental dynamics."
                       : "Good effort. Review the verified scientific explanations below."}
                   </p>
                 </div>
 
-                <div className="space-y-6 my-6">
+                <div className="space-y-6 my-7">
                   {quizQuestions.map((q, idx) => {
                     const chosen = selectedAnswers[idx];
                     const isCorrect = chosen !== undefined && q.options[chosen].correct;
                     return (
-                      <div key={idx} className="p-4 bg-white border border-slate-200 rounded text-xs">
-                        <div className="font-bold text-slate-900 mb-2 flex items-start gap-2">
+                      <div key={idx} className="p-5 bg-white border border-slate-200 rounded-md text-sm">
+                        <div className="font-bold text-slate-900 mb-2.5 flex items-start gap-2.5">
                           {isCorrect ? (
-                            <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                           ) : (
-                            <XCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                            <XCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                           )}
-                          <span>{q.q}</span>
+                          <span className="text-sm sm:text-base">{q.q}</span>
                         </div>
-                        <div className="text-slate-600 pl-6 mb-2">
+                        <div className="text-slate-700 pl-7 mb-2.5">
                           Your answer: <strong className={isCorrect ? 'text-emerald-700' : 'text-red-700'}>
                             {chosen !== undefined ? q.options[chosen].text : 'Unanswered'}
                           </strong>
                         </div>
-                        <div className="pl-6 pt-2 border-t border-slate-100 text-[11px] text-slate-500">
+                        <div className="pl-7 pt-2.5 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
                           <strong>Scientific Rationale:</strong> {q.explanation}
                         </div>
                       </div>
@@ -375,9 +375,9 @@ export default function ImpactEstimator() {
                 <div className="text-center pt-2">
                   <button
                     onClick={resetQuiz}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded bg-slate-900 text-white hover:bg-slate-800"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-95"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
+                    <RefreshCw className="w-4 h-4" />
                     Retake Quiz
                   </button>
                 </div>
