@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson, RotateCcw } from 'lucide-react';
+import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson, RotateCcw, Search, ShieldAlert } from 'lucide-react';
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
 export default function HazardMap() {
@@ -10,14 +10,20 @@ export default function HazardMap() {
   const markersRef = useRef({});
   const polygonRef = useRef(null);
   const [selectedRisk, setSelectedRisk] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
   const [activeBarangay, setActiveBarangay] = useState(HAGONOY_BARANGAYS[0]);
   const [isDossierOpen, setIsDossierOpen] = useState(false);
+  const [isCorridorModalOpen, setIsCorridorModalOpen] = useState(false);
 
-  const filteredBarangays = selectedRisk === 'All'
-    ? HAGONOY_BARANGAYS
-    : HAGONOY_BARANGAYS.filter((b) => b.risk === selectedRisk);
+  const filteredBarangays = HAGONOY_BARANGAYS.filter((b) => {
+    const matchesRisk = selectedRisk === 'All' || b.risk === selectedRisk;
+    const matchesSearch = b.name.toLowerCase().includes(searchQuery.toLowerCase().trim());
+    return matchesRisk && matchesSearch;
+  });
 
   const handleResetView = () => {
+    setSelectedRisk('All');
+    setSearchQuery('');
     if (mapInstanceRef.current) {
       mapInstanceRef.current.flyTo([14.825, 120.725], 12, { duration: 1.0 });
       mapInstanceRef.current.closePopup();
@@ -58,9 +64,13 @@ export default function HazardMap() {
         dashArray: '4, 4'
       }).addTo(map);
 
-      polygonRef.current.bindTooltip("Critical Subsidence Corridor (>4.5 cm/yr)", {
+      polygonRef.current.bindTooltip("Critical Subsidence Corridor (>4.5 cm/yr) - Click for spec", {
         sticky: true,
         className: 'font-mono text-[10px]'
+      });
+
+      polygonRef.current.on('click', () => {
+        setIsCorridorModalOpen(true);
       });
 
       mapInstanceRef.current = map;
@@ -125,7 +135,7 @@ export default function HazardMap() {
     });
 
     return () => {};
-  }, [selectedRisk]);
+  }, [selectedRisk, searchQuery]);
 
   const handleFocusBarangay = (bg) => {
     setActiveBarangay(bg);
@@ -155,13 +165,13 @@ export default function HazardMap() {
             </p>
           </div>
 
-          {/* Controls: Filter & VS Code GeoJSON link */}
+          {/* Controls: Filter & GeoJSON link */}
           <div className="flex flex-wrap items-center gap-2">
             <a
-              href="/hagonoy-subsidence-map.geojson"
+              href="./hagonoy-subsidence-map.geojson"
               download="hagonoy-subsidence-map.geojson"
               className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-semibold rounded bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 transition shadow-xs"
-              title="Download GeoJSON for VS Code Built-in Map Viewer"
+              title="Download GeoJSON for GIS and VS Code Map Viewer"
             >
               <FileJson className="w-3.5 h-3.5 text-cyan-700" />
               GeoJSON File
@@ -169,7 +179,7 @@ export default function HazardMap() {
 
             <button
               onClick={handleResetView}
-              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition shadow-2xs cursor-pointer"
               title="Reset Map to Full Municipality View"
             >
               <RotateCcw className="w-3 h-3 text-slate-500" />
@@ -183,7 +193,7 @@ export default function HazardMap() {
                 <button
                   key={lvl}
                   onClick={() => setSelectedRisk(lvl)}
-                  className={`px-2.5 py-1 text-xs font-medium rounded transition ${
+                  className={`px-2.5 py-1 text-xs font-medium rounded transition cursor-pointer ${
                     selectedRisk === lvl
                       ? 'bg-slate-900 text-white font-semibold'
                       : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
@@ -204,7 +214,7 @@ export default function HazardMap() {
 
             {/* In-Map Legend Overlay */}
             <div className="p-3 bg-white border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <span className="text-slate-500 font-mono text-[11px] uppercase">Legend:</span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-600"></span>
@@ -218,10 +228,14 @@ export default function HazardMap() {
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
                   Moderate (&lt;3.0 cm/yr)
                 </span>
-                <span className="hidden sm:flex items-center gap-1.5 text-red-700">
+                <button
+                  type="button"
+                  onClick={() => setIsCorridorModalOpen(true)}
+                  className="flex items-center gap-1.5 text-red-700 hover:text-red-900 cursor-pointer underline text-[11px] font-semibold"
+                >
                   <span className="w-4 h-2 border border-red-600 border-dashed bg-red-100/60 inline-block"></span>
-                  Hazard Corridor
-                </span>
+                  Hazard Corridor Spec
+                </button>
               </div>
               <div className="text-[11px] font-mono text-slate-400">
                 OpenStreetMap / GeoJSON
@@ -276,7 +290,7 @@ export default function HazardMap() {
               <div className="mt-4 pt-3 border-t border-slate-100">
                 <button
                   onClick={() => setIsDossierOpen(true)}
-                  className="w-full py-2 px-3 text-xs font-semibold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98 flex items-center justify-center gap-1.5 shadow-2xs"
+                  className="w-full py-2 px-3 text-xs font-semibold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98 flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
                 >
                   <Info className="w-3.5 h-3.5 text-cyan-400" />
                   View Sector Geological Dossier
@@ -284,34 +298,63 @@ export default function HazardMap() {
               </div>
             </div>
 
-            {/* Quick Barangay Telemetry Selector */}
+            {/* Quick Barangay Telemetry Selector with search input */}
             <div className="bg-white border border-slate-200 rounded p-4 flex-1 flex flex-col">
-              <span className="text-xs font-mono font-semibold uppercase text-slate-500 mb-2 block">
-                Quick Sector Selector ({filteredBarangays.length})
-              </span>
-              <div className="overflow-y-auto max-h-[190px] space-y-1.5 pr-1">
-                {filteredBarangays.map((bg) => {
-                  const isCurrent = bg.name === activeBarangay.name;
-                  return (
-                    <button
-                      key={bg.name}
-                      onClick={() => handleFocusBarangay(bg)}
-                      className={`w-full text-left px-3 py-2 rounded text-xs flex items-center justify-between transition ${
-                        isCurrent
-                          ? 'bg-cyan-50 border border-cyan-700 text-cyan-950 font-semibold'
-                          : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-transparent'
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        <Navigation className={`w-3 h-3 ${isCurrent ? 'text-cyan-700' : 'text-slate-400'}`} />
-                        Brgy. {bg.name}
-                      </span>
-                      <span className="font-mono text-[11px] text-slate-500">
-                        {bg.rateCmYear} cm/yr
-                      </span>
-                    </button>
-                  );
-                })}
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                <span className="text-xs font-mono font-semibold uppercase text-slate-500">
+                  Quick Sector Selector ({filteredBarangays.length})
+                </span>
+              </div>
+
+              {/* Search box */}
+              <div className="relative mb-2">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search barangay..."
+                  className="w-full text-xs p-1.5 pl-7 rounded border border-slate-200 bg-slate-50 text-slate-800 outline-none focus:border-cyan-700"
+                />
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2 top-1.5 text-xs text-slate-400 hover:text-slate-600"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              <div className="overflow-y-auto max-h-[170px] space-y-1.5 pr-1">
+                {filteredBarangays.length === 0 ? (
+                  <div className="text-center py-4 text-xs text-slate-400 font-mono">
+                    No barangay matches "{searchQuery}".
+                  </div>
+                ) : (
+                  filteredBarangays.map((bg) => {
+                    const isCurrent = bg.name === activeBarangay.name;
+                    return (
+                      <button
+                        key={bg.name}
+                        onClick={() => handleFocusBarangay(bg)}
+                        className={`w-full text-left px-3 py-2 rounded text-xs flex items-center justify-between transition cursor-pointer ${
+                          isCurrent
+                            ? 'bg-cyan-50 border border-cyan-700 text-cyan-950 font-semibold'
+                            : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-transparent'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <Navigation className={`w-3 h-3 ${isCurrent ? 'text-cyan-700' : 'text-slate-400'}`} />
+                          Brgy. {bg.name}
+                        </span>
+                        <span className="font-mono text-[11px] text-slate-500">
+                          {bg.rateCmYear} cm/yr
+                        </span>
+                      </button>
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>
@@ -331,7 +374,7 @@ export default function HazardMap() {
               </div>
               <button
                 onClick={() => setIsDossierOpen(false)}
-                className="text-slate-400 hover:text-slate-600 font-bold p-1 rounded"
+                className="text-slate-400 hover:text-slate-600 font-bold p-1 rounded cursor-pointer"
               >
                 ✕
               </button>
@@ -383,9 +426,63 @@ export default function HazardMap() {
             <div className="mt-5 pt-3 border-t border-slate-200 flex justify-end">
               <button
                 onClick={() => setIsDossierOpen(false)}
-                className="px-4 py-2 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-95"
+                className="px-4 py-2 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-95 cursor-pointer"
               >
                 Close Dossier
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Critical Hazard Corridor Spec Dialog */}
+      {isCorridorModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-2xl animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
+              <div className="flex items-center gap-2 text-red-700 font-bold text-base">
+                <ShieldAlert className="w-5 h-5 text-red-600" />
+                <span>Critical Coastal Hazard Corridor</span>
+              </div>
+              <button
+                onClick={() => setIsCorridorModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 font-bold p-1 rounded"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs text-slate-700">
+              <p className="leading-relaxed">
+                The red-hatched polygon delineated on the map encompasses southwestern Hagonoy's most vulnerable deltaic belt—spanning <strong>Brgy. Pugad, Tibaguin, and San Pascual</strong> along the Manila Bay coastal interface.
+              </p>
+
+              <div className="p-3 bg-red-50 border border-red-200 rounded font-mono space-y-1">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Corridor Area:</span>
+                  <span className="font-bold text-slate-900">~14.2 km² delta plain</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Peak Displacement:</span>
+                  <span className="font-bold text-red-700">Up to 5.2 cm / year</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Relative Sea Level Rise:</span>
+                  <span className="font-bold text-red-700">10× to 15× global average</span>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-slate-600">
+                Ground elevations inside this corridor are currently below the Mean High Water Spring (MHWS) astronomical tide datum. Without municipal deep-well moratoria and surface bulk water connection, this zone faces permanent inundation by 2035.
+              </p>
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-slate-200 flex justify-end">
+              <button
+                onClick={() => setIsCorridorModalOpen(false)}
+                className="px-4 py-2 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition"
+              >
+                Close Corridor Spec
               </button>
             </div>
           </div>

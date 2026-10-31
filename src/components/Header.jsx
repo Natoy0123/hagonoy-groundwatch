@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AlertTriangle, MapPin, Activity, FileText, Menu, X, PlusCircle } from 'lucide-react';
+import { AlertTriangle, MapPin, Activity, FileText, Menu, X, PlusCircle, Radio, Info } from 'lucide-react';
 
 export default function Header({ onOpenReport }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isTelemetryModalOpen, setIsTelemetryModalOpen] = useState(false);
 
   const navLinks = [
     { label: "Overview", href: "#overview" },
@@ -10,31 +11,52 @@ export default function Header({ onOpenReport }) {
     { label: "Hazard Map", href: "#hazard-map" },
     { label: "Impact Estimator", href: "#estimator" },
     { label: "Mitigation", href: "#mitigation" },
+    { label: "Citizen Reports", href: "#community-report" },
     { label: "References", href: "#references" },
   ];
 
+  const handleScrollToMap = () => {
+    setIsTelemetryModalOpen(false);
+    const mapEl = document.getElementById('hazard-map');
+    if (mapEl) {
+      mapEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all duration-200">
-      {/* Telemetry Status Strip */}
+      {/* Telemetry Status Strip with interactive diagnostic trigger */}
       <div className="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 font-mono">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+            <button
+              onClick={() => setIsTelemetryModalOpen(true)}
+              className="inline-flex items-center gap-1.5 text-emerald-400 font-medium hover:text-emerald-300 transition cursor-pointer"
+              title="Click to view sensor telemetry diagnostics"
+            >
               <span className="w-2 h-2 rounded-full bg-emerald-400 radar-dot"></span>
               TELEMETRY ACTIVE
-            </span>
+              <Info className="w-3 h-3 text-emerald-400/80" />
+            </button>
             <span className="hidden sm:inline text-slate-600">|</span>
-            <span className="hidden sm:inline flex items-center gap-1 text-slate-300">
+            <button
+              onClick={handleScrollToMap}
+              className="hidden sm:inline-flex items-center gap-1 text-slate-300 hover:text-cyan-400 transition"
+              title="Click to locate on interactive map"
+            >
               <MapPin className="w-3.5 h-3.5 text-cyan-400" />
               Hagonoy, Bulacan (14.8344° N, 120.7329° E)
-            </span>
+            </button>
           </div>
           <div className="flex items-center gap-4 text-slate-400">
             <span className="hidden md:inline">Basin: Pampanga Delta Lowlands</span>
-            <span className="text-amber-400 flex items-center gap-1 font-semibold">
+            <a
+              href="#hazard-map"
+              className="text-amber-400 hover:text-amber-300 transition flex items-center gap-1 font-semibold"
+            >
               <AlertTriangle className="w-3.5 h-3.5" />
               Hazard: Critical Land Subsidence
-            </span>
+            </a>
           </div>
         </div>
       </div>
@@ -130,6 +152,76 @@ export default function Header({ onOpenReport }) {
             >
               Report Sinking Issue
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Telemetry Diagnostics Modal */}
+      {isTelemetryModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-2xl animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 radar-dot"></span>
+                <h3 className="font-bold text-slate-900 text-base">
+                  Telemetry Diagnostics & Sensor Spec
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsTelemetryModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 font-bold p-1 rounded"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs font-mono">
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded space-y-1.5">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Telemetry Node:</span>
+                  <span className="font-bold text-slate-900">HGW-MUNICIPAL-OBS-01</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Centroid Coordinates:</span>
+                  <span className="font-bold text-slate-900">14.8344° N, 120.7329° E</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Geodetic Datum:</span>
+                  <span className="font-semibold text-slate-700">WGS84 / PRS92</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">InSAR Dataset:</span>
+                  <span className="font-semibold text-cyan-800">UP-NIGS Sentinel-1 Time Series</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Tidal Datum Source:</span>
+                  <span className="font-semibold text-slate-700">DOST-PAGASA Manila Bay MHWS</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Operational Health:</span>
+                  <span className="font-bold text-emerald-700">ONLINE (Continuous)</span>
+                </div>
+              </div>
+
+              <p className="font-sans text-slate-600 text-[11px] leading-relaxed">
+                GroundWatch correlates radar satellite surface displacement measurements with localized ground-truth reports from all 26 barangays across Hagonoy, Bulacan.
+              </p>
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+              <button
+                onClick={handleScrollToMap}
+                className="px-3.5 py-2 text-xs font-semibold rounded bg-cyan-700 text-white hover:bg-cyan-800 transition"
+              >
+                Locate on GIS Map
+              </button>
+              <button
+                onClick={() => setIsTelemetryModalOpen(false)}
+                className="px-3.5 py-2 text-xs font-semibold rounded border border-slate-300 text-slate-700 hover:bg-slate-50 transition"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

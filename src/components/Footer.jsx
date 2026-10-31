@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Shield, Globe2, Heart } from 'lucide-react';
+import { ArrowUp, Shield, Globe2, Heart, FileText, Download } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -11,8 +11,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
           {/* Col 1: Platform Overview */}
-          <div className="md:col-span-5 space-y-3">
-            <div className="flex items-center gap-2.5 text-white font-bold text-base tracking-tight">
+          <div className="md:col-span-4 space-y-3">
+            <div className="flex items-center gap-2.5 text-white font-bold text-base tracking-tight cursor-pointer" onClick={scrollToTop}>
               <img
                 src="./logo.svg"
                 alt="Hagonoy GroundWatch Logo"
@@ -35,32 +35,47 @@ export default function Footer() {
             </h4>
             <div className="space-y-1.5 text-xs text-slate-300">
               <div><strong>Course:</strong> Environmental Science</div>
-              <div><strong>Term:</strong> 1st Semester, 2026–2027</div>
+              <div><strong>Section:</strong> BSIT 4A-G1</div>
+              <div><strong>Authors:</strong> Del Ayre, Patrick Froilan S. • Maninang, Mark Joseph C. • David, Angelo P.</div>
               <div><strong>Target Municipality:</strong> Hagonoy, Bulacan, Philippines</div>
-              <div><strong>Project Type:</strong> Community Awareness Website (70%) & Technical Report (30%)</div>
+              <div><strong>Deliverable:</strong> Community Telemetry Platform (70%) & Technical Report (30%)</div>
             </div>
           </div>
 
-          {/* Col 3: Navigation & Action */}
-          <div className="md:col-span-3 flex flex-col justify-between">
+          {/* Col 3: Navigation & Downloads */}
+          <div className="md:col-span-4 flex flex-col justify-between">
             <div>
               <h4 className="text-white font-semibold text-xs uppercase tracking-wider font-mono mb-2">
-                Quick Navigation
+                Quick Navigation & Open Data
               </h4>
-              <ul className="space-y-1.5 text-xs">
+              <ul className="grid grid-cols-2 gap-y-1.5 gap-x-2 text-xs">
                 <li><a href="#overview" className="hover:text-cyan-400 transition">Geological Overview</a></li>
                 <li><a href="#causes-effects" className="hover:text-cyan-400 transition">Causes & Community Impact</a></li>
                 <li><a href="#hazard-map" className="hover:text-cyan-400 transition">Interactive Hazard Map</a></li>
                 <li><a href="#estimator" className="hover:text-cyan-400 transition">Aquifer Stress Simulator</a></li>
                 <li><a href="#mitigation" className="hover:text-cyan-400 transition">Mitigation Strategies</a></li>
+                <li><a href="#community-report" className="hover:text-cyan-400 transition">Citizen Incident Logs</a></li>
                 <li><a href="#references" className="hover:text-cyan-400 transition">APA 7th References</a></li>
+                <li>
+                  <a
+                    href="./hagonoy-subsidence-map.geojson"
+                    download="hagonoy-subsidence-map.geojson"
+                    className="hover:text-cyan-400 transition font-mono flex items-center gap-1"
+                  >
+                    <Download className="w-3 h-3 text-cyan-400" />
+                    Download GeoJSON
+                  </a>
+                </li>
               </ul>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-4 flex items-center justify-between">
+              <span className="text-[10px] font-mono text-slate-500">
+                Bulacan Delta Telemetry Network
+              </span>
               <button
                 onClick={scrollToTop}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 text-slate-200 hover:bg-slate-700 transition font-mono text-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 text-slate-200 hover:bg-slate-700 transition font-mono text-xs cursor-pointer"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
                 Back to Top
@@ -72,7 +87,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
           <div>
-            &copy; 2026 Hagonoy GroundWatch Project Group. Published under CC BY 4.0 for Environmental Education.
+            &copy; 2026 Hagonoy GroundWatch Project Group (BSIT 4A-G1). Published under CC BY 4.0 for Environmental Education.
           </div>
           <div className="font-mono text-slate-400 flex items-center gap-1">
             <span>Powered by Leaflet GIS & Scientific Open Data</span>
