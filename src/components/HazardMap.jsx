@@ -11,6 +11,7 @@ export default function HazardMap() {
   const polygonRef = useRef(null);
   const [selectedRisk, setSelectedRisk] = useState('All');
   const [activeBarangay, setActiveBarangay] = useState(HAGONOY_BARANGAYS[0]);
+  const [isDossierOpen, setIsDossierOpen] = useState(false);
 
   const filteredBarangays = selectedRisk === 'All'
     ? HAGONOY_BARANGAYS
@@ -271,6 +272,16 @@ export default function HazardMap() {
                   <span className="text-[11px] text-slate-500 block mt-0.5">Primary driver: {activeBarangay.primaryDriver}</span>
                 </div>
               </div>
+
+              <div className="mt-4 pt-3 border-t border-slate-100">
+                <button
+                  onClick={() => setIsDossierOpen(true)}
+                  className="w-full py-2 px-3 text-xs font-semibold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98 flex items-center justify-center gap-1.5 shadow-2xs"
+                >
+                  <Info className="w-3.5 h-3.5 text-cyan-400" />
+                  View Sector Geological Dossier
+                </button>
+              </div>
             </div>
 
             {/* Quick Barangay Telemetry Selector */}
@@ -306,6 +317,80 @@ export default function HazardMap() {
           </div>
         </div>
       </div>
+
+      {/* Sector Geological Dossier Dialog */}
+      {isDossierOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-lg w-full p-6 shadow-xl animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-700"></span>
+                <h3 className="font-bold text-slate-900 text-base">
+                  Geological Dossier: Brgy. {activeBarangay.name}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsDossierOpen(false)}
+                className="text-slate-400 hover:text-slate-600 font-bold p-1 rounded"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded font-mono grid grid-cols-2 gap-2">
+                <div>
+                  <span className="text-slate-400 block text-[10px] uppercase">Coordinates</span>
+                  <span className="font-bold text-slate-800">{activeBarangay.coords[0]}° N, {activeBarangay.coords[1]}° E</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] uppercase">Hazard Index</span>
+                  <span className="font-bold text-red-600">{activeBarangay.risk} Category</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] uppercase">Subsidence Velocity</span>
+                  <span className="font-bold text-slate-900">{activeBarangay.rateCmYear} cm / year</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block text-[10px] uppercase">Elevation (MSL)</span>
+                  <span className="font-bold text-slate-900">{activeBarangay.elevationM} meters</span>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-slate-800 uppercase font-mono text-[11px] mb-1">
+                  Subsurface Lithology & Extraction Pressure
+                </h4>
+                <p className="text-slate-600 leading-relaxed text-[11px]">
+                  Underlain by unconsolidated deltaic fine sands and compressible Quaternary clay deposits (15–35m deep). {activeBarangay.primaryDriver}. High susceptibility to irreversible volumetric pore collapse upon aquifer drawdown.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-slate-800 uppercase font-mono text-[11px] mb-1">
+                  Local Field Observations
+                </h4>
+                <p className="text-slate-600 leading-relaxed text-[11px]">
+                  {activeBarangay.impactNotes}
+                </p>
+              </div>
+
+              <div className="p-2.5 bg-amber-50 border border-amber-200 rounded text-[11px] text-amber-900">
+                <strong>Emergency Inundation Advisory:</strong> During spring tides and typhoons, road access routes may be submerged by up to 0.8m. Evacuation staging is designated at higher inland elevations.
+              </div>
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-slate-200 flex justify-end">
+              <button
+                onClick={() => setIsDossierOpen(false)}
+                className="px-4 py-2 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-95"
+              >
+                Close Dossier
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -7,6 +7,10 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [filterBarangay, setFilterBarangay] = useState('All');
 
+  // Confirmation & Receipt Dialog States
+  const [pendingReport, setPendingReport] = useState(null);
+  const [receiptData, setReceiptData] = useState(null);
+
   // Form Fields
   const [barangay, setBarangay] = useState('Pugad');
   const [issueType, setIssueType] = useState('Sunny-Day Tidal Flooding');
@@ -57,34 +61,34 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleInitiateSubmit = (e) => {
     e.preventDefault();
     if (!description.trim()) return;
 
-    const newReport = {
+    setPendingReport({
       id: Date.now(),
+      refCode: `HGW-${Math.floor(1000 + Math.random() * 9000)}`,
       barangay,
       issueType,
       waterDepth,
       description,
       reporterType,
       date: new Date().toISOString().split('T')[0]
-    };
+    });
+  };
 
-    const updated = [newReport, ...reportsList];
+  const handleConfirmSubmit = () => {
+    if (!pendingReport) return;
+    const updated = [pendingReport, ...reportsList];
     setReportsList(updated);
     try {
       localStorage.setItem('hagonoy_groundwatch_reports', JSON.stringify(updated));
     } catch (err) {
       console.error(err);
     }
-
-    setSubmittedSuccess(true);
+    setReceiptData(pendingReport);
+    setPendingReport(null);
     setDescription('');
-    setTimeout(() => {
-      setSubmittedSuccess(false);
-      if (onCloseModal) onCloseModal();
-    }, 2000);
   };
 
   const formContent = (
@@ -116,7 +120,7 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
       </div>
 
       {activeFormMode === 'direct' ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleInitiateSubmit} className="space-y-4">
           {submittedSuccess && (
             <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded text-xs flex items-center gap-2 animate-fade-in">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -386,6 +390,90 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      {pendingReport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-xl animate-scale-in">
+            <div className="flex items-center gap-2 text-cyan-800 font-bold text-base mb-2">
+              <AlertCircle className="w-5 h-5 text-cyan-700" />
+              <span>Confirm Observation Submission</span>
+            </div>
+            <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+              Please verify your report details. Once confirmed, this field observation will be indexed into the open-access telemetry log for Hagonoy.
+            </p>
+
+            <div className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-2 mb-5 font-mono">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Sector:</span>
+                <span className="font-bold text-slate-900">Brgy. {pendingReport.barangay}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Category:</span>
+                <span className="font-bold text-cyan-800">{pendingReport.issueType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Water Depth:</span>
+                <span className="font-bold text-slate-900">{pendingReport.waterDepth}</span>
+              </div>
+              <div className="pt-2 border-t border-slate-200 text-slate-700 font-sans text-xs">
+                "{pendingReport.description}"
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => setPendingReport(null)}
+                className="px-4 py-2 text-xs font-semibold rounded border border-slate-300 text-slate-700 hover:bg-slate-50 transition active:scale-95"
+              >
+                Back to Edit
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmSubmit}
+                className="px-4 py-2 text-xs font-bold rounded bg-cyan-700 text-white hover:bg-cyan-800 transition shadow-xs active:scale-95"
+              >
+                Confirm & Log Report
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Receipt / Reference Dialog */}
+      {receiptData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-lg max-w-md w-full p-6 shadow-xl animate-scale-in text-center">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-slate-900 text-base mb-1">
+              Field Telemetry Successfully Logged
+            </h3>
+            <p className="text-xs text-slate-600 mb-4">
+              Your observation for <strong>Brgy. {receiptData.barangay}</strong> is now live in the community register.
+            </p>
+
+            <div className="p-3 bg-slate-50 border border-slate-200 rounded font-mono text-xs mb-5 space-y-1">
+              <div className="text-slate-500 text-[10px] uppercase">Telemetry Tracking ID</div>
+              <div className="text-lg font-extrabold text-cyan-900">{receiptData.refCode}</div>
+              <div className="text-[10px] text-slate-400">Timestamp: {receiptData.date} | Status: PUBLIC_OPEN_ACCESS</div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setReceiptData(null);
+                if (onCloseModal) onCloseModal();
+              }}
+              className="w-full py-2.5 text-xs font-bold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98"
+            >
+              Close & View in Live Register
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
