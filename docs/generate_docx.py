@@ -1,9 +1,9 @@
 import docx
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+import shutil
 
 def set_cell_background(cell, fill_color):
     tcPr = cell._element.get_or_add_tcPr()
@@ -23,7 +23,7 @@ def create_document():
         section.left_margin = Inches(1.0)
         section.right_margin = Inches(1.0)
 
-    # Base Normal Style: Times New Roman, 12pt, 1.5 line spacing
+    # Base Normal Style: Times New Roman, 12pt, 1.3 line spacing
     style = doc.styles['Normal']
     font = style.font
     font.name = 'Times New Roman'
@@ -35,7 +35,7 @@ def create_document():
     # ------------------ COVER PAGE ------------------
     cover_title = doc.add_paragraph()
     cover_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    cover_title.paragraph_format.space_before = Pt(72)
+    cover_title.paragraph_format.space_before = Pt(54)
     run_title = cover_title.add_run("Hagonoy GroundWatch:\nA Web-Based Environmental Awareness Platform on Land Subsidence")
     run_title.font.name = 'Times New Roman'
     run_title.font.size = Pt(18)
@@ -44,8 +44,8 @@ def create_document():
 
     sub_title = doc.add_paragraph()
     sub_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    sub_title.paragraph_format.space_before = Pt(12)
-    sub_title.paragraph_format.space_after = Pt(96)
+    sub_title.paragraph_format.space_before = Pt(10)
+    sub_title.paragraph_format.space_after = Pt(60)
     run_sub = sub_title.add_run("Final Course Output in Environmental Science\nAcademic Year 2026–2027 | First Semester")
     run_sub.font.name = 'Times New Roman'
     run_sub.font.size = Pt(12)
@@ -54,31 +54,43 @@ def create_document():
 
     details = doc.add_paragraph()
     details.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    details.paragraph_format.space_before = Pt(36)
+    details.paragraph_format.space_before = Pt(24)
     
-    r1 = details.add_run("Prepared by:\n")
+    r1 = details.add_run("Prepared by Group Members (BSIT 4A-G1):\n")
     r1.font.bold = True
-    details.add_run("Group Members:\n[Member 1 Name - Lead Research & Content]\n[Member 2 Name - GIS & Spatial Data]\n[Member 3 Name - Frontend Engineering & UI]\n[Member 4 Name - Community Outreach & Documentation]\n[Member 5 Name - Policy & Mitigation Synthesis]\n\n")
+    r1.font.size = Pt(12)
+    
+    members_text = (
+        "Del Ayre, Patrick Froilan S.\n"
+        "Maninang, Mark Joseph C.\n"
+        "David, Angelo P.\n\n"
+    )
+    r_members = details.add_run(members_text)
+    r_members.font.size = Pt(12)
     
     r2 = details.add_run("Course & Section: ")
     r2.font.bold = True
-    details.add_run("Environmental Science / Section [Insert Section]\n")
+    details.add_run("Environmental Science / BSIT 4A-G1\n")
     
-    r3 = details.add_run("Course Instructor: ")
+    r3 = details.add_run("Live Web Application (Render): ")
     r3.font.bold = True
-    details.add_run("[Insert Instructor Name]\n")
-    
-    r4 = details.add_run("Date of Submission: ")
+    details.add_run("https://hagonoy-groundwatch-tik7.onrender.com\n")
+
+    r4 = details.add_run("GitHub Repository: ")
     r4.font.bold = True
-    details.add_run("November 8, 2026\n")
+    details.add_run("https://github.com/Natoy0123/hagonoy-groundwatch\n")
+    
+    r5 = details.add_run("Date of Submission: ")
+    r5.font.bold = True
+    details.add_run("October 31, 2026\n")
 
     doc.add_page_break()
 
     # ------------------ HELPER FUNCTIONS FOR SECTIONS ------------------
     def add_h1(text):
         p = doc.add_paragraph()
-        p.paragraph_format.space_before = Pt(18)
-        p.paragraph_format.space_after = Pt(8)
+        p.paragraph_format.space_before = Pt(16)
+        p.paragraph_format.space_after = Pt(6)
         p.paragraph_format.keep_with_next = True
         run = p.add_run(text)
         run.font.name = 'Times New Roman'
@@ -90,7 +102,7 @@ def create_document():
     def add_h2(text):
         p = doc.add_paragraph()
         p.paragraph_format.space_before = Pt(12)
-        p.paragraph_format.space_after = Pt(6)
+        p.paragraph_format.space_after = Pt(4)
         p.paragraph_format.keep_with_next = True
         run = p.add_run(text)
         run.font.name = 'Times New Roman'
@@ -105,7 +117,7 @@ def create_document():
         "Coastal communities in the western Pampanga River Delta face an escalating crisis: the ground beneath their feet is sinking at alarming velocities. In Hagonoy, Bulacan, anthropogenic groundwater over-extraction—predominantly driven by commercial aquaculture and unpermitted deep wells—collapses unconsolidated Quaternary clay layers, resulting in peak subsidence rates of 2.5 to 5.2 cm per year. Coupled with global sea level rise, this induces persistent 'sunny-day tidal flooding' that submerges roads, homes, and public schools twice daily."
     )
     doc.add_paragraph(
-        "To dispel the widespread misconception that this chronic flooding is purely an unavoidable consequence of climate change, this project presents Hagonoy GroundWatch (https://[group-url].github.io/hagonoy-groundwatch). GroundWatch is a civic telemetry platform that synthesizes satellite InSAR geodesy, open spatial hazard data, an interactive Leaflet GIS map, an Aquifer Stress Simulator, and a citizen incident reporting portal. The platform empowers communities, educators, and municipal leaders to understand the hydrogeological roots of the crisis and demand long-term transition to treated surface bulk water."
+        "To dispel the widespread misconception that this chronic flooding is purely an unavoidable consequence of climate change, this project presents Hagonoy GroundWatch (https://hagonoy-groundwatch-tik7.onrender.com). GroundWatch is a civic telemetry platform that synthesizes satellite InSAR geodesy, open spatial hazard data, an interactive Leaflet GIS map, an Aquifer Stress Simulator, and a citizen incident reporting portal. The platform empowers communities, educators, and municipal leaders to understand the hydrogeological roots of the crisis and demand long-term transition to treated surface bulk water."
     )
 
     # ------------------ SECTION I: INTRODUCTION ------------------
@@ -153,15 +165,16 @@ def create_document():
     doc.add_paragraph("• Interactive Leaflet Geospatial Hazard Map: GIS map featuring geolocated pins for key Hagonoy sectors (Pugad, Tibaguin, San Pascual, Mercado, Santa Elena, Santa Cruz, San Agustin, San Pedro) with risk filters, fly-to camera controls, and sector popups.")
     doc.add_paragraph("• Aquifer Stress Simulator & Literacy Quiz: An interactive mathematical sandbox calculating annual land drop from extraction parameters, paired with an automated knowledge-check quiz.")
     doc.add_paragraph("• Multi-Tier Mitigation Roadmap: Detailed action protocols categorized for Community (mangrove bioshields, rainwater harvesting), Local Government (well permits, CLUP zoning), and National agencies (Bulacan Bulk Water integration).")
-    doc.add_paragraph("• Citizen Incident Reporting Portal: Interactive intake form with local persistence and Google Form prototype synchronization.")
+    doc.add_paragraph("• Citizen Incident Reporting Portal: Interactive intake form with local persistence, confirmation dialog validation, receipt generation, and live feed synchronization.")
     doc.add_paragraph("• References Page: Full academic bibliography formatted in APA 7th Edition with direct DOIs.")
 
     add_h2("3.2 Technologies Used")
     doc.add_paragraph("• Frontend Framework: React 19 + Vite (modular component design, zero runtime overhead, optimized static production build).")
     doc.add_paragraph("• Styling: Tailwind CSS v4 configured with a high-contrast civic telemetry palette (Slate-50, Slate-900, Cyan-700, Amber-600, Red-600).")
-    doc.add_paragraph("• Geospatial Mapping: Leaflet.js v1.9.4 and OpenStreetMap/CARTO Light basemaps.")
+    doc.add_paragraph("• Geospatial Mapping: Leaflet.js v1.9.4 and OpenStreetMap standard tiles.")
     doc.add_paragraph("• Vector Graphics & Icons: Lucide React SVG library.")
-    doc.add_paragraph("• Citizen Telemetry Persistence: Browser HTML5 localStorage API.")
+    doc.add_paragraph("• Quality Assurance: Automated Playwright E2E Test Suite (30/30 functional assertions passed, 7-viewport responsive validation).")
+    doc.add_paragraph("• Deployment Pipeline: Continuous deployment on Render linked to GitHub main branch.")
 
     # ------------------ SECTION IV: ENVIRONMENTAL SIGNIFICANCE ------------------
     add_h1("IV. Environmental Significance")
@@ -198,8 +211,15 @@ def create_document():
         p.paragraph_format.space_after = Pt(6)
         p.add_run(r)
 
-    doc.save(r"C:\Users\ADMIN\React_Projects\hagonoy-groundwatch\docs\Hagonoy-GroundWatch-Project-Documentation.docx")
-    print("DOCX successfully generated at: C:\\Users\\ADMIN\\React_Projects\\hagonoy-groundwatch\\docs\\Hagonoy-GroundWatch-Project-Documentation.docx")
+    # Save to project docs
+    repo_docx_path = r"C:\Users\ADMIN\React_Projects\hagonoy-groundwatch\docs\Hagonoy-GroundWatch-Project-Documentation.docx"
+    doc.save(repo_docx_path)
+    print(f"[OK] DOCX successfully generated at: {repo_docx_path}")
+
+    # Copy to user's Downloads folder
+    download_docx_path = r"C:\Users\ADMIN\Downloads\Hagonoy-GroundWatch-Project-Documentation.docx"
+    shutil.copyfile(repo_docx_path, download_docx_path)
+    print(f"[OK] DOCX successfully copied to Downloads: {download_docx_path}")
 
 if __name__ == "__main__":
     create_document()
