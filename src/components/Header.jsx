@@ -43,9 +43,11 @@ export default function Header({ onOpenReport }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-10 h-10 rounded bg-cyan-700 flex items-center justify-center text-white font-bold tracking-tight shadow-xs transition-transform duration-200 group-hover:scale-105">
-              GW
-            </div>
+            <img
+              src="./logo.svg"
+              alt="Hagonoy GroundWatch Logo"
+              className="w-10 h-10 object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105"
+            />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-slate-900 text-lg tracking-tight group-hover:text-cyan-700 transition-colors">

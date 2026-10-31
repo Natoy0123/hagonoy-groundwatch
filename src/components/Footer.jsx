@@ -12,10 +12,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
           {/* Col 1: Platform Overview */}
           <div className="md:col-span-5 space-y-3">
-            <div className="flex items-center gap-2 text-white font-bold text-base tracking-tight">
-              <span className="w-7 h-7 rounded bg-cyan-700 text-white flex items-center justify-center text-xs">
-                GW
-              </span>
+            <div className="flex items-center gap-2.5 text-white font-bold text-base tracking-tight">
+              <img
+                src="./logo.svg"
+                alt="Hagonoy GroundWatch Logo"
+                className="w-8 h-8 object-contain"
+              />
               <span>HAGONOY GROUNDWATCH</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
