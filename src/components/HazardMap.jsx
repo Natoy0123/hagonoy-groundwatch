@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson } from 'lucide-react';
+import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson, RotateCcw } from 'lucide-react';
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
 export default function HazardMap() {
@@ -15,6 +15,13 @@ export default function HazardMap() {
   const filteredBarangays = selectedRisk === 'All'
     ? HAGONOY_BARANGAYS
     : HAGONOY_BARANGAYS.filter((b) => b.risk === selectedRisk);
+
+  const handleResetView = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.flyTo([14.825, 120.725], 12, { duration: 1.0 });
+      mapInstanceRef.current.closePopup();
+    }
+  };
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -158,6 +165,15 @@ export default function HazardMap() {
               <FileJson className="w-3.5 h-3.5 text-cyan-700" />
               GeoJSON File
             </a>
+
+            <button
+              onClick={handleResetView}
+              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition shadow-2xs"
+              title="Reset Map to Full Municipality View"
+            >
+              <RotateCcw className="w-3 h-3 text-slate-500" />
+              Reset View
+            </button>
 
             <div className="flex items-center gap-1.5 ml-1">
               <Filter className="w-3.5 h-3.5 text-slate-500" />

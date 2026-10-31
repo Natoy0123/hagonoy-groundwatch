@@ -63,8 +63,8 @@ export default function Header({ onOpenReport }) {
             </div>
           </div>
 
-          {/* Desktop Nav with Animated Underline */}
-          <nav className="hidden md:flex items-center gap-6">
+          {/* Desktop Nav (lg and above to prevent tablet overflow) */}
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -77,7 +77,7 @@ export default function Header({ onOpenReport }) {
           </nav>
 
           {/* Action Button */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={onOpenReport}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded bg-cyan-700 text-white hover:bg-cyan-800 active:scale-95 transition-all duration-150 shadow-xs hover:shadow-sm"
@@ -87,8 +87,8 @@ export default function Header({ onOpenReport }) {
             </button>
           </div>
 
-          {/* Mobile hamburger */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Mobile/Tablet hamburger (< lg) */}
+          <div className="lg:hidden flex items-center gap-2">
             <button
               onClick={onOpenReport}
               className="p-1.5 text-cyan-700 hover:bg-slate-100 rounded active:scale-90 transition-transform"
@@ -107,9 +107,9 @@ export default function Header({ onOpenReport }) {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown with slide/fade */}
+      {/* Mobile/Tablet Menu Dropdown with slide/fade */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 animate-fade-in-up">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 animate-fade-in-up">
           {navLinks.map((link) => (
             <a
               key={link.href}

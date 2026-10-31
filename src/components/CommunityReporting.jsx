@@ -5,6 +5,7 @@ import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 export default function CommunityReporting({ isOpenModal, onCloseModal }) {
   const [activeFormMode, setActiveFormMode] = useState('direct');
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [filterBarangay, setFilterBarangay] = useState('All');
 
   // Form Fields
   const [barangay, setBarangay] = useState('Pugad');
@@ -323,20 +324,34 @@ export default function CommunityReporting({ isOpenModal, onCloseModal }) {
 
           {/* Right: Live Community Log Feed */}
           <div className="lg:col-span-5 bg-white border border-slate-200 rounded p-6 shadow-xs">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 mb-4 gap-2">
               <div className="flex items-center gap-2">
                 <ListFilter className="w-4 h-4 text-slate-600" />
                 <h3 className="font-bold text-slate-900 text-sm">
                   Recent Ground-Truth Logs
                 </h3>
               </div>
-              <span className="text-[11px] font-mono text-cyan-800 font-semibold px-2 py-0.5 rounded bg-cyan-50 border border-cyan-200">
-                {reportsList.length} Verified
-              </span>
+              <div className="flex items-center gap-2">
+                <select
+                  value={filterBarangay}
+                  onChange={(e) => setFilterBarangay(e.target.value)}
+                  className="text-[11px] p-1 border border-slate-200 rounded bg-slate-50 text-slate-700 font-medium"
+                >
+                  <option value="All">All Barangays</option>
+                  {HAGONOY_BARANGAYS.map((b) => (
+                    <option key={b.name} value={b.name}>
+                      Brgy. {b.name}
+                    </option>
+                  ))}
+                </select>
+                <span className="text-[11px] font-mono text-cyan-800 font-semibold px-2 py-0.5 rounded bg-cyan-50 border border-cyan-200">
+                  {reportsList.length}
+                </span>
+              </div>
             </div>
 
             <div className="space-y-3.5 max-h-[460px] overflow-y-auto pr-1">
-              {reportsList.map((rep) => (
+              {(filterBarangay === 'All' ? reportsList : reportsList.filter(r => r.barangay === filterBarangay)).map((rep) => (
                 <div
                   key={rep.id}
                   className="p-3.5 bg-slate-50 border border-slate-200 rounded text-xs space-y-1.5 interactive-card"

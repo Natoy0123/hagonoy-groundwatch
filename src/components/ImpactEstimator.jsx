@@ -259,13 +259,21 @@ export default function ImpactEstimator() {
           <div className="bg-slate-50 border border-slate-200 rounded p-6 sm:p-8 max-w-3xl mx-auto">
             {!quizSubmitted ? (
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
                   <span className="text-xs font-mono font-semibold uppercase text-slate-500">
                     Question {currentQIndex + 1} of {quizQuestions.length}
                   </span>
                   <span className="text-xs font-mono text-cyan-800 font-semibold">
                     Knowledge Check
                   </span>
+                </div>
+
+                {/* Step Progress Bar */}
+                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden mb-6">
+                  <div
+                    className="bg-cyan-700 h-full transition-all duration-300"
+                    style={{ width: `${((currentQIndex + 1) / quizQuestions.length) * 100}%` }}
+                  />
                 </div>
 
                 <h3 className="text-lg font-bold text-slate-900 mb-5">
