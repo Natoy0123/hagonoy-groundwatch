@@ -62,6 +62,20 @@ export default function App() {
     }
   }, []);
 
+  // Smooth scroll to target section when landing directly on a hash URL (e.g., #hazard-map)
+  useEffect(() => {
+    if (window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      const timer = setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const handleAddReport = (newReport) => {
     setReportsList((prev) => {
       const updated = [newReport, ...prev];
