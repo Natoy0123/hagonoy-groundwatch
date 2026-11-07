@@ -262,7 +262,7 @@ export default function HazardMap({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left: Interactive Leaflet Map Container */}
           <div className="lg:col-span-8 bg-white border border-slate-200 rounded overflow-hidden shadow-xs relative isolate z-0 flex flex-col">
-            <div className="h-[460px] sm:h-[520px] flex-1 w-full relative z-0 overflow-hidden" ref={mapContainerRef} />
+            <div className="w-full h-[400px] sm:h-[480px] lg:h-[520px] min-h-[380px] relative z-0 overflow-hidden" ref={mapContainerRef} />
 
             {/* In-Map Legend Overlay */}
             <div className="p-3 bg-white border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs">

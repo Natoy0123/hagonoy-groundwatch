@@ -109,6 +109,7 @@
 /* Leaflet containment and popup polish */
 .leaflet-container {
   width: 100%;
+  min-height: 380px;
   overflow: hidden;
   z-index: 0;
 }
