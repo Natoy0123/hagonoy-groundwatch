@@ -5,14 +5,14 @@ import { TELEMETRY_STATS } from '../data/subsidenceData';
 export default function Hero({ onOpenReport }) {
   const getKpiDestination = (id) => {
     switch (id) {
-      case 'peak-rate':
+      case 'subsidence-rate':
         return { href: '#hazard-map', targetLabel: 'Inspect Hazard Zones →' };
-      case 'aquifer-drawdown':
-        return { href: '#causes-effects', targetLabel: 'View Drawdown Causes →' };
+      case 'cumulative-drop':
+        return { href: '#causes-effects', targetLabel: 'View Compaction Mechanics →' };
       case 'high-tide-flooding':
         return { href: '#estimator', targetLabel: 'Simulate Tidal Impact →' };
-      case 'land-area-submerged':
-        return { href: '#hazard-map', targetLabel: 'View Inundation Map →' };
+      case 'population-exposed':
+        return { href: '#community-report', targetLabel: 'View Citizen Logs →' };
       default:
         return { href: '#hazard-map', targetLabel: 'Explore Data →' };
     }

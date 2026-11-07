@@ -16,9 +16,10 @@ const BASELINE_REPORTS = [
     refCode: "HGW-1028",
     barangay: "Tibaguin",
     issueType: "Sunny-Day Tidal Flooding",
-    waterDepth: "12 - 18 inches",
+    waterDepth: "12 - 24 inches (Knee level)",
+    severity: "Critical",
     description: "Spring tide entered school premises at 11:30 AM. Classes shifted to makeshift stilt catwalks.",
-    reporterType: "Teacher / Resident",
+    reporterType: "Student / Researcher",
     date: "2026-10-28"
   },
   {
@@ -26,35 +27,54 @@ const BASELINE_REPORTS = [
     refCode: "HGW-1025",
     barangay: "San Pascual",
     issueType: "Structural Foundation Cracking",
-    waterDepth: "None",
+    waterDepth: "None / Structural Only",
+    severity: "Severe",
     description: "Concrete fence tilted by ~15 degrees due to differential settlement near old aquaculture well.",
-    reporterType: "Homeowner",
+    reporterType: "Resident",
     date: "2026-10-25"
   },
   {
     id: 3,
     refCode: "HGW-1022",
-    barangay: "Mercado",
+    barangay: "Mercado (Poblacion)",
     issueType: "Drainage Backflow",
-    waterDepth: "4 - 8 inches",
+    waterDepth: "6 - 12 inches (Shin level)",
+    severity: "Severe",
     description: "High tide backflow through drainage culvert near public market during full moon tide.",
-    reporterType: "Merchant",
+    reporterType: "Fisherfolk / Business Owner",
     date: "2026-10-22"
+  },
+  {
+    id: 4,
+    refCode: "HGW-1019",
+    barangay: "Pugad",
+    issueType: "Sunny-Day Tidal Flooding",
+    waterDepth: "> 24 inches (Waist level+)",
+    severity: "Critical",
+    description: "Coastal footbridge and elementary school courtyard submerged for 5 hours during syzygy high tide despite zero rainfall.",
+    reporterType: "LGU / Barangay Official",
+    date: "2026-10-19"
   }
 ];
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reportsList, setReportsList] = useState(BASELINE_REPORTS);
+  const [focusedMapBarangay, setFocusedMapBarangay] = useState(null);
+  const [preselectedReportBarangay, setPreselectedReportBarangay] = useState(null);
 
-  // Load persisted reports from localStorage on mount
+  // Load persisted reports from localStorage on mount (normalizing legacy "Mercado" -> "Mercado (Poblacion)")
   useEffect(() => {
     try {
       const saved = localStorage.getItem('hagonoy_groundwatch_reports');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setReportsList(parsed);
+          const normalized = parsed.map((r) => ({
+            ...r,
+            barangay: r.barangay === "Mercado" ? "Mercado (Poblacion)" : r.barangay
+          }));
+          setReportsList(normalized);
         }
       }
     } catch (e) {
@@ -97,6 +117,22 @@ export default function App() {
     }
   };
 
+  const handleLocateBarangayOnMap = (barangayName) => {
+    setFocusedMapBarangay({ name: barangayName, ts: Date.now() });
+    const mapSection = document.getElementById('hazard-map');
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleReportForBarangay = (barangayName) => {
+    setPreselectedReportBarangay({ name: barangayName, ts: Date.now() });
+    const reportSection = document.getElementById('community-report');
+    if (reportSection) {
+      reportSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden">
       {/* Sticky Header */}
@@ -107,13 +143,19 @@ export default function App() {
         <Hero onOpenReport={() => setIsModalOpen(true)} />
         <Overview />
         <CausesAndEffects />
-        <HazardMap />
+        <HazardMap
+          reportsList={reportsList}
+          focusedBarangayRequest={focusedMapBarangay}
+          onReportForBarangay={handleReportForBarangay}
+        />
         <ImpactEstimator />
         <Mitigation />
         <CommunityReporting
           reportsList={reportsList}
           onAddReport={handleAddReport}
           onResetReports={handleResetReports}
+          onLocateOnMap={handleLocateBarangayOnMap}
+          preselectedBarangayRequest={preselectedReportBarangay}
         />
         <References />
       </main>
@@ -129,6 +171,8 @@ export default function App() {
           reportsList={reportsList}
           onAddReport={handleAddReport}
           onResetReports={handleResetReports}
+          onLocateOnMap={handleLocateBarangayOnMap}
+          preselectedBarangayRequest={preselectedReportBarangay}
         />
       )}
     </div>

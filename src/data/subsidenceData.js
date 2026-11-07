@@ -120,6 +120,35 @@ export const HAGONOY_BARANGAYS = [
   }
 ];
 
+export const ALL_HAGONOY_BARANGAY_NAMES = [
+  "Pugad",
+  "Tibaguin",
+  "San Pascual",
+  "Mercado (Poblacion)",
+  "Santa Elena",
+  "Santa Cruz",
+  "San Agustin",
+  "San Pedro",
+  "Abulalas",
+  "Carillo",
+  "Iba",
+  "Iba-Ibayo",
+  "Palapat",
+  "Sagrada Familia",
+  "San Isidro",
+  "San Jose",
+  "San Juan",
+  "San Miguel",
+  "San Nicolas",
+  "San Roque",
+  "San Sebastian",
+  "Santa Monica",
+  "Santo Niño (Poblacion)",
+  "Santo Rosario",
+  "Sto. Cristo",
+  "Tampok"
+];
+
 export const CAUSES_DATA = [
   {
     id: "groundwater",

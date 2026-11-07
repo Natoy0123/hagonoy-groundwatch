@@ -4,7 +4,11 @@ import 'leaflet/dist/leaflet.css';
 import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson, RotateCcw, Search, ShieldAlert } from 'lucide-react';
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
-export default function HazardMap() {
+export default function HazardMap({
+  reportsList = [],
+  focusedBarangayRequest = null,
+  onReportForBarangay
+}) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markersRef = useRef({});
@@ -14,6 +18,9 @@ export default function HazardMap() {
   const [activeBarangay, setActiveBarangay] = useState(HAGONOY_BARANGAYS[0]);
   const [isDossierOpen, setIsDossierOpen] = useState(false);
   const [isCorridorModalOpen, setIsCorridorModalOpen] = useState(false);
+
+  const getReportCountForBarangay = (bgName) =>
+    reportsList.filter((r) => r.barangay === bgName).length;
 
   const filteredBarangays = HAGONOY_BARANGAYS.filter((b) => {
     const matchesRisk = selectedRisk === 'All' || b.risk === selectedRisk;
@@ -109,9 +116,11 @@ export default function HazardMap() {
 
       const marker = L.marker(bg.coords, { icon: customIcon }).addTo(map);
 
+      const repCount = getReportCountForBarangay(bg.name);
+
       const popupContent = `
         <div style="font-family: inherit; font-size: 12px; color: #0f172a;">
-          <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <span>Brgy. ${bg.name}</span>
             <span style="font-size: 10px; padding: 2px 6px; border-radius: 2px; background: ${color}22; color: ${color}; font-weight: 700;">
               ${bg.risk}
@@ -119,7 +128,8 @@ export default function HazardMap() {
           </div>
           <div style="margin-bottom: 2px;"><strong>Subsidence Rate:</strong> ${bg.rateCmYear} cm/yr</div>
           <div style="margin-bottom: 2px;"><strong>Mean Elevation:</strong> ${bg.elevationM}m MSL</div>
-          <div style="margin-bottom: 4px;"><strong>Tidal Inundation:</strong> ~${bg.floodDaysYear} days/yr</div>
+          <div style="margin-bottom: 2px;"><strong>Tidal Inundation:</strong> ~${bg.floodDaysYear} days/yr</div>
+          <div style="margin-bottom: 4px;"><strong>Citizen Logs:</strong> ${repCount} recorded incident(s)</div>
           <div style="font-size: 11px; color: #475569; margin-top: 6px; border-top: 1px solid #e2e8f0; padding-top: 4px;">
             ${bg.impactNotes}
           </div>
@@ -135,7 +145,27 @@ export default function HazardMap() {
     });
 
     return () => {};
-  }, [selectedRisk, searchQuery]);
+  }, [selectedRisk, searchQuery, reportsList]);
+
+  useEffect(() => {
+    if (!focusedBarangayRequest || !focusedBarangayRequest.name) return;
+    const match = HAGONOY_BARANGAYS.find(
+      (b) => b.name.toLowerCase() === focusedBarangayRequest.name.toLowerCase()
+    );
+    if (match) {
+      setSelectedRisk('All');
+      setSearchQuery('');
+      setActiveBarangay(match);
+      setTimeout(() => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.flyTo(match.coords, 14, { duration: 1.2 });
+          if (markersRef.current[match.name]) {
+            markersRef.current[match.name].openPopup();
+          }
+        }
+      }, 220);
+    }
+  }, [focusedBarangayRequest]);
 
   const handleFocusBarangay = (bg) => {
     setActiveBarangay(bg);
@@ -280,14 +310,21 @@ export default function HazardMap() {
                   </span>
                   <span className="text-[11px] text-slate-500 ml-1">m MSL</span>
                 </div>
-                <div className="p-2.5 bg-slate-50 rounded col-span-2">
-                  <span className="text-slate-500 block text-[10px] uppercase">Annual Tidal Floods</span>
-                  <span className="text-base font-bold text-slate-900">~{activeBarangay.floodDaysYear} days/year</span>
-                  <span className="text-[11px] text-slate-500 block mt-0.5">Primary driver: {activeBarangay.primaryDriver}</span>
+                <div className="p-2.5 bg-slate-50 rounded col-span-2 flex items-center justify-between">
+                  <div>
+                    <span className="text-slate-500 block text-[10px] uppercase">Annual Tidal Floods</span>
+                    <span className="text-base font-bold text-slate-900">~{activeBarangay.floodDaysYear} days/year</span>
+                    <span className="text-[11px] text-slate-500 block mt-0.5">Primary driver: {activeBarangay.primaryDriver}</span>
+                  </div>
+                  <div className="text-right pl-2 border-l border-slate-200">
+                    <span className="text-slate-500 block text-[10px] uppercase">Citizen Logs</span>
+                    <span className="text-base font-bold text-cyan-800">{getReportCountForBarangay(activeBarangay.name)}</span>
+                    <span className="text-[10px] text-slate-500 block">verified</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100">
+              <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2">
                 <button
                   onClick={() => setIsDossierOpen(true)}
                   className="w-full py-2 px-3 text-xs font-semibold rounded bg-slate-900 text-white hover:bg-slate-800 transition active:scale-98 flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
@@ -295,6 +332,15 @@ export default function HazardMap() {
                   <Info className="w-3.5 h-3.5 text-cyan-400" />
                   View Sector Geological Dossier
                 </button>
+                {onReportForBarangay && (
+                  <button
+                    type="button"
+                    onClick={() => onReportForBarangay(activeBarangay.name)}
+                    className="w-full py-1.5 px-3 text-xs font-semibold rounded border border-cyan-700 text-cyan-800 bg-cyan-50/60 hover:bg-cyan-100 transition cursor-pointer"
+                  >
+                    + Log Incident in Brgy. {activeBarangay.name}
+                  </button>
+                )}
               </div>
             </div>
 
