@@ -5,6 +5,15 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
   }
 
   code, pre, .font-mono {

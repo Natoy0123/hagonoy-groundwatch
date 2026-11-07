@@ -111,10 +111,10 @@ export default function ImpactEstimator() {
             Understand how localized water withdrawals translate directly into land deformation, or test your environmental science literacy on coastal delta dynamics.
           </p>
 
-          <div className="mt-6 inline-flex p-1 bg-slate-100 rounded border border-slate-200">
+          <div className="mt-6 grid grid-cols-1 sm:inline-flex p-1 bg-slate-100 rounded border border-slate-200 gap-1 sm:gap-0 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('calculator')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition cursor-pointer ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 text-xs font-semibold rounded transition cursor-pointer ${
                 activeTab === 'calculator'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -124,7 +124,7 @@ export default function ImpactEstimator() {
             </button>
             <button
               onClick={() => setActiveTab('quiz')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition cursor-pointer ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 text-xs font-semibold rounded transition cursor-pointer ${
                 activeTab === 'quiz'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-bold'
                   : 'text-slate-600 hover:text-slate-900'

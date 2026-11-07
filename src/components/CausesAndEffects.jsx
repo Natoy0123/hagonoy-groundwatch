@@ -53,10 +53,10 @@ export default function CausesAndEffects() {
           </p>
 
           {/* Tab Switcher with smooth transition */}
-          <div className="mt-6 inline-flex p-1 bg-slate-100 rounded border border-slate-200">
+          <div className="mt-6 grid grid-cols-1 sm:inline-flex p-1 bg-slate-100 rounded border border-slate-200 gap-1 sm:gap-0 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('causes')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition-all duration-200 cursor-pointer ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 text-xs font-semibold rounded transition-all duration-200 cursor-pointer ${
                 activeTab === 'causes'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -66,7 +66,7 @@ export default function CausesAndEffects() {
             </button>
             <button
               onClick={() => setActiveTab('effects')}
-              className={`px-4 py-1.5 text-xs font-semibold rounded transition-all duration-200 cursor-pointer ${
+              className={`px-3 sm:px-4 py-2 sm:py-1.5 text-xs font-semibold rounded transition-all duration-200 cursor-pointer ${
                 activeTab === 'effects'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -79,7 +79,7 @@ export default function CausesAndEffects() {
 
         {/* Tab 1: Causes */}
         {activeTab === 'causes' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start animate-fade-in">
             {/* Cause Selection Rail */}
             <div className="lg:col-span-5 space-y-3">
               {CAUSES_DATA.map((cause) => {
@@ -90,7 +90,7 @@ export default function CausesAndEffects() {
                     onClick={() => setSelectedCauseId(cause.id)}
                     className={`w-full text-left p-4 rounded border transition-all duration-200 cursor-pointer ${
                       isSelected
-                        ? 'bg-cyan-50/80 border-cyan-700 text-cyan-950 shadow-xs translate-x-1'
+                        ? 'bg-cyan-50/80 border-cyan-700 text-cyan-950 shadow-xs lg:translate-x-1'
                         : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800 hover:bg-slate-50'
                     }`}
                   >
