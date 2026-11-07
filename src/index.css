@@ -99,19 +99,33 @@
 
 /* Leaflet containment and popup polish */
 .leaflet-container {
-  width: 100% !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  z-index: 10 !important;
-}
-
-.leaflet-pane {
-  z-index: 10 !important;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
 }
 
 .leaflet-top,
 .leaflet-bottom {
-  z-index: 20 !important;
+  z-index: 1000 !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #f1f5f9 !important;
+  color: #0e7490 !important;
 }
 
 .leaflet-popup-content-wrapper {

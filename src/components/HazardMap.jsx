@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { Map as MapIcon, Filter, Info, AlertTriangle, Navigation, Download, FileJson, RotateCcw, Search, ShieldAlert } from 'lucide-react';
 import { HAGONOY_BARANGAYS } from '../data/subsidenceData';
 
@@ -41,11 +40,34 @@ export default function HazardMap({
     if (!mapContainerRef.current) return;
 
     if (!mapInstanceRef.current) {
-      const map = L.map(mapContainerRef.current, {
+      const container = mapContainerRef.current;
+      const nativeFocus = HTMLElement.prototype.focus;
+      container.focus = function (options) {
+        nativeFocus.call(this, { ...(options || {}), preventScroll: true });
+      };
+
+      const map = L.map(container, {
         center: [14.825, 120.725],
         zoom: 12,
         scrollWheelZoom: false,
       });
+
+      if (map.zoomControl) {
+        map.zoomControl._refocusOnMap = function () {};
+        const zoomButtons = [
+          map.zoomControl._zoomInButton,
+          map.zoomControl._zoomOutButton,
+        ];
+        zoomButtons.forEach((btn) => {
+          if (btn) {
+            btn.removeAttribute('href');
+            btn.style.cursor = 'pointer';
+            btn.focus = function (options) {
+              nativeFocus.call(this, { ...(options || {}), preventScroll: true });
+            };
+          }
+        });
+      }
 
       // OpenStreetMap Standard Tiles (100% free, zero API key requirement)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -82,7 +104,7 @@ export default function HazardMap({
 
       mapInstanceRef.current = map;
       setTimeout(() => {
-        map.invalidateSize();
+        map.invalidateSize({ pan: false });
       }, 150);
     }
 
@@ -240,7 +262,7 @@ export default function HazardMap({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left: Interactive Leaflet Map Container */}
           <div className="lg:col-span-8 bg-white border border-slate-200 rounded overflow-hidden shadow-xs relative isolate z-0 flex flex-col">
-            <div className="h-[460px] sm:h-[520px] w-full relative z-0 overflow-hidden" ref={mapContainerRef} />
+            <div className="h-[460px] sm:h-[520px] flex-1 w-full relative z-0 overflow-hidden" ref={mapContainerRef} />
 
             {/* In-Map Legend Overlay */}
             <div className="p-3 bg-white border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs">
