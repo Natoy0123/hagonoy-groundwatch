@@ -1,0 +1,475 @@
+{
+  "installedAt": "2026-11-11T09:52:05.967Z",
+  "version": "1.0.0",
+  "managedFiles": [
+    {
+      "path": ".agents/skills/clean-architecture/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:b90051e0d23e74e6b6878150fcd876988ca6d0798ab2404fe2add191cc0c062c",
+      "lastUpdated": "2026-11-11T09:52:06.237Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/authentication-flows.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:b3b6678ff89508dd8c1262325a571b4ef0b4dae774a35aa96c1a564900fe0707",
+      "lastUpdated": "2026-11-11T09:52:06.656Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/authentication.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:32b9cc1b400891be98445fdbd78db53f61f113df7bcd99e013abc09ce69f4390",
+      "lastUpdated": "2026-11-11T09:52:06.658Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/clock-mocking.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:8a2f4223d7f05dc7f801cc3fb62f7da05c90c8d4243456bbe64827689be5e95b",
+      "lastUpdated": "2026-11-11T09:52:06.661Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/mobile-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e4ec8d767a6d72d5f0ba7fe6ae66d84e72fd316c67ebff0adb4c49d4aa360661",
+      "lastUpdated": "2026-11-11T09:52:06.662Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/multi-context.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:608f74ad48711001fc04baca20be24fde7c270650334c50bbe2340df060b3978",
+      "lastUpdated": "2026-11-11T09:52:06.665Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/multi-user.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:3c4ab0c7725181047b3f2a4633d5973604fd32226e9a63e3a640e96b2fb3efc3",
+      "lastUpdated": "2026-11-11T09:52:06.666Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/network-advanced.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1a1cf76f8f7b1f488fc1eb0e7c6a7643eb90fa30d224c51ff81bca87befbaed8",
+      "lastUpdated": "2026-11-11T09:52:06.668Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/advanced/third-party.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:3e563731f92e21ce91e4d15fde8363fc94c70c9af56ba4a7573c8ab7747b9539",
+      "lastUpdated": "2026-11-11T09:52:06.670Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/architecture/pom-vs-fixtures.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:c8589d2dfdd417d340f15360c6ed5f8a3486821a5273504e81ea500ce41a6b0c",
+      "lastUpdated": "2026-11-11T09:52:06.675Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/architecture/test-architecture.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:75ad4d03a211e617a54398afe295b77446c2f73ad045119800188c6e2798e38f",
+      "lastUpdated": "2026-11-11T09:52:06.678Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/architecture/when-to-mock.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:b9684bb096991f7cfd44365b79f29ddc23de2b1b07098e11c7dbf50503bec4e1",
+      "lastUpdated": "2026-11-11T09:52:06.680Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/browser-apis/browser-apis.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e942f6dd38201cbfe4f9094b29b13537ee0af0769e46047ee3188abcbce0480a",
+      "lastUpdated": "2026-11-11T09:52:06.682Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/browser-apis/iframes.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:0cfac92451c82f24f3723a625c52b1dd3c2df1179dacee317526d749c5ce0371",
+      "lastUpdated": "2026-11-11T09:52:06.684Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/browser-apis/service-workers.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:840afe0b50df6c3811e4e00684bda53748f3ba1439efb939217ff5847063f2f4",
+      "lastUpdated": "2026-11-11T09:52:06.685Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/browser-apis/websockets.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:c118e67f56d709597103d701f1dc04edd4f4edae77577d443e36791024888038",
+      "lastUpdated": "2026-11-11T09:52:06.688Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/annotations.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:638f3970b5692a54e62fce61835856b459cfacb63efcc243610032c910e52242",
+      "lastUpdated": "2026-11-11T09:52:06.692Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/assertions-waiting.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:53042e107afa002e23b148f1068748b94587f24de138d743283467bb75b5e4fc",
+      "lastUpdated": "2026-11-11T09:52:06.693Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/configuration.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:4d5a3f118dfd770ed308c9361340bc4731439b2f945e7d4032afb56c61c703e1",
+      "lastUpdated": "2026-11-11T09:52:06.695Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/fixtures-hooks.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:aa459a7f23826f57325b828b6e7db3bd0fda55b3078498d4e2b75808e23b9cbf",
+      "lastUpdated": "2026-11-11T09:52:06.698Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/global-setup.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:5eb898b823c2f4d31fd2f64c1b33d6242cd067bb0bbd7541eb89cae05ec93444",
+      "lastUpdated": "2026-11-11T09:52:06.700Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/locators.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:38e6277745dec845577c6a278245f85f2d0fb0890095d20e446220e6b5e08114",
+      "lastUpdated": "2026-11-11T09:52:06.702Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/page-object-model.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:60e806ed31b5325b100ede6039ba4289105d2c2ce6dd23ea9369ce2149aaf45a",
+      "lastUpdated": "2026-11-11T09:52:06.703Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/projects-dependencies.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:2ee49f42857f3e06a68f7fc15060c45d5565c835b2aadd8bf4d62da4151ddfe4",
+      "lastUpdated": "2026-11-11T09:52:06.705Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/test-data.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:9fd499c491bb5d907876d9b59ef0a85683ac20229943970d83c675c405d0f8ea",
+      "lastUpdated": "2026-11-11T09:52:06.707Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/test-suite-structure.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1be826491d2a3423e17964d53c68d7c0b2766fabfd6394f8f3812da1218edda5",
+      "lastUpdated": "2026-11-11T09:52:06.709Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/core/test-tags.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:51ab6cb746de78eb8d6a80ede05858c8246bf3a8129e7ba0c0c0e9f15d705846",
+      "lastUpdated": "2026-11-11T09:52:06.710Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/debugging/console-errors.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e56e5c5cf322d5a209e2f8eee41f667f87eef33a9aec60269dd711bc2c629fdd",
+      "lastUpdated": "2026-11-11T09:52:06.712Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/debugging/debugging.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:eb904f9ace384417a678c65d196690a4119bc7273f776b0cde711c4b73248973",
+      "lastUpdated": "2026-11-11T09:52:06.713Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/debugging/error-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:059fd539912299f0891ceb874f803947559e2e7823fa4e29a6b636940453df26",
+      "lastUpdated": "2026-11-11T09:52:06.716Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/debugging/flaky-tests.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e0af779e537050606d0e957c7f14f3b92bea5ce569ab64c574b06b7b091656aa",
+      "lastUpdated": "2026-11-11T09:52:06.718Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/frameworks/angular.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:2e9865cac70b41c3961d5c54f1bafb804ca212bedc35604e7b6064653c216f13",
+      "lastUpdated": "2026-11-11T09:52:06.721Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/frameworks/nextjs.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:962bfb56044507184408f84d2b2f7d0ef5adc68064290ad5ecfa8f62944b3ea4",
+      "lastUpdated": "2026-11-11T09:52:06.722Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/frameworks/react.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:b640c2fa6b003cbe38dd3747b8866faa2e6cfa30a90d3abff6a05a948e7bc004",
+      "lastUpdated": "2026-11-11T09:52:06.724Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/frameworks/vue.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:0ec8ca467c7d56b6e540b5b9dac0e27d028b06e97d199de8299741b4ba7a574e",
+      "lastUpdated": "2026-11-11T09:52:06.725Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/ci-cd.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:29553c7a451375dc95977601429b78d1fa3b8591927bfad8737dc463dadce255",
+      "lastUpdated": "2026-11-11T09:52:06.727Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/docker.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:53dea7c132585544c87a3d9358dc90741688536055c5b461183cfdf002411232",
+      "lastUpdated": "2026-11-11T09:52:06.729Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/github-actions.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:0d55fa2d2b23d05a2f335cd629fdf1e8785d43a627001e63388648c8a2e446b7",
+      "lastUpdated": "2026-11-11T09:52:06.731Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/gitlab.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:a9a6d8c003a71bdc250efa218aaf538f6c9cfa925d377967933a3470994f2b7c",
+      "lastUpdated": "2026-11-11T09:52:06.734Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/other-providers.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:f44fbc9aa9f4391147005d4e04f51a604eb7bfa319fe668f75db8db87f3c08c9",
+      "lastUpdated": "2026-11-11T09:52:06.735Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/parallel-sharding.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e8d4cfc6811b91107f9a748bf3811ac1af68664385acb04d94ad93bd4cce4700",
+      "lastUpdated": "2026-11-11T09:52:06.738Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/performance.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:097caa5a4ff7574af0b251582995370dfdbf6c70dd99523606385b3e3639e905",
+      "lastUpdated": "2026-11-11T09:52:06.740Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/reporting.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:9e8d8366ec587ac361fe10e62fd7c43989b7311b22d297b9bcb7afb7b4935336",
+      "lastUpdated": "2026-11-11T09:52:06.743Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/infrastructure-ci-cd/test-coverage.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:07510982473e4f201318f70d601664c11f7b66fd3a97f155cbc14b662571c78f",
+      "lastUpdated": "2026-11-11T09:52:06.744Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/accessibility.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:12f2dca9327536e27396e1d1dc24041f2e1b94d94637f08d05cd451d8f98d628",
+      "lastUpdated": "2026-11-11T09:52:06.748Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/api-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:0a588d63cbc7a6e8c997acd3b3aecb3f2a8e83384f80af61bfca7de06ec0bee2",
+      "lastUpdated": "2026-11-11T09:52:06.750Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/browser-extensions.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1bab5b64f4ef5b864093cdac97ba2ee7dad5ec753484eae1bbbe25ca9765e7b9",
+      "lastUpdated": "2026-11-11T09:52:06.752Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/canvas-webgl.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:87a3aa0e8fe461f9cc54725876a329d2a6c4345d0ace232b2bbc7c6f89f60437",
+      "lastUpdated": "2026-11-11T09:52:06.753Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/component-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1233bba2184023d35aafca7912d6f358e479a70deeedc7db7b57298f35636ba5",
+      "lastUpdated": "2026-11-11T09:52:06.756Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/drag-drop.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:868a56a99c4330e9f753355a41def015e3eb9fe12fc505233d4d30ac1e367d46",
+      "lastUpdated": "2026-11-11T09:52:06.757Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/electron.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:d6e49e2bdea973e92fa1151fae8a760cb0ad7b784dde22dddf60c465294d0cc8",
+      "lastUpdated": "2026-11-11T09:52:06.759Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/file-operations.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:f88e9af0f448a3e9d7b9c901533371576ee59136394c50d3c470e6cdf98319be",
+      "lastUpdated": "2026-11-11T09:52:06.760Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/file-upload-download.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:6c87a03e89ed387778bd90126889192b47eee9919c9fdaabc96bf16665bd9bbb",
+      "lastUpdated": "2026-11-11T09:52:06.763Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/forms-validation.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:043e8cda8a9febc4d8e1058857f8f642ac070be0bf4bd376535e7b31f5e19936",
+      "lastUpdated": "2026-11-11T09:52:06.764Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/graphql-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:a9633de8900b75a83bcf124e2adde7852b6fe0da84a92a2bd3b5e9d1977ac34f",
+      "lastUpdated": "2026-11-11T09:52:06.767Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/i18n.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:e2c540611153d8f3c7b7c856a197501e03a7343e7f14e6689940f15c2198244c",
+      "lastUpdated": "2026-11-11T09:52:06.769Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/performance-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:dee2cae0b1cedc85ce0a0f70b23fa1232e0246a200f544b02f5efc2cc3b02552",
+      "lastUpdated": "2026-11-11T09:52:06.771Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/security-testing.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:86b1218c70987ed9ddb650fb63b99b34e266946f1511e7e9847be3abeec14534",
+      "lastUpdated": "2026-11-11T09:52:06.775Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/references/testing-patterns/visual-regression.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:0397ba37dfe274f1dcabe63d81174c6392fc696027f61e01a8a16dd524969d58",
+      "lastUpdated": "2026-11-11T09:52:06.778Z"
+    },
+    {
+      "path": ".agents/skills/write-a-test/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:3bdca627a0c85c86747feeab1f5247622822dfc7bab1e53c39553f34247272a2",
+      "lastUpdated": "2026-11-11T09:52:06.779Z"
+    },
+    {
+      "path": ".agents/skills/security-best-practices/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1a9f64019f6165b20819f1c8d00a674ff369d29a56b62557f20113458671ebb6",
+      "lastUpdated": "2026-11-11T09:52:06.793Z"
+    },
+    {
+      "path": ".agents/skills/caveman/commit/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1429e5e3a864b5cf83bcb293c3e66366133f372ab22f97096eb868315821dad0",
+      "lastUpdated": "2026-11-11T09:52:06.813Z"
+    },
+    {
+      "path": ".agents/skills/caveman/compress/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:d051fc8c155c9e684acb130113d65c2f004d398e255be8a084e67343f57f95a8",
+      "lastUpdated": "2026-11-11T09:52:06.815Z"
+    },
+    {
+      "path": ".agents/skills/caveman/help/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:46927c243e22c4deb54b91cab6233962695c72ae7ca1deaa5894981c2c6db286",
+      "lastUpdated": "2026-11-11T09:52:06.816Z"
+    },
+    {
+      "path": ".agents/skills/caveman/review/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:1b0d707b3f487ae389241acc093c6956ed8dd3d103c0841682273fc6c8981b8d",
+      "lastUpdated": "2026-11-11T09:52:06.818Z"
+    },
+    {
+      "path": ".agents/skills/caveman/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:8b0305ee97e6b907a4799dcc21208ae30b16d8b49891af3af659b039fecb9109",
+      "lastUpdated": "2026-11-11T09:52:06.820Z"
+    },
+    {
+      "path": ".agents/skills/react-principles/SKILL.md",
+      "runtime": "add",
+      "backupPath": null,
+      "checksum": "sha256:8ca368e57e5ca6a042a105f30c34d24d7e6910b3d076d57db2a98be1b6781448",
+      "lastUpdated": "2026-11-11T09:52:06.829Z"
+    }
+  ]
+}
